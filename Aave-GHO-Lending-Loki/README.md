@@ -1,4 +1,4 @@
-# Aave Credit Delegation
+# Aave Credit Delegation and Improving Aave User Adoption
 
 Workflow for enabling Aave credit delegation and user adoption using GHO based Aave lending and payments, Loki Protocol for Aave Credit Delegation: 
 
