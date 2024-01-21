@@ -64,9 +64,9 @@ We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE 
 
 Please visit https://github.com/seetadev/ParkGHO-Family/tree/main/Mile-Connectkit-Family
 
-# Aave User Adoption
+# Aave Credit Delegation & User Adoption
 
- Workflow for enabling Aave citizen adoption using GHO based Aave lending and payments, Loki Protocol project template for Aave Credit Delegation, Chainlink CCIP, Functions for cross chain participation and Connectkit integration: 
+ Workflow for enabling Aave citizen adoption & user adoption using GHO based Aave lending and payments, Loki Protocol project template for Aave Credit Delegation, Chainlink CCIP, Functions for cross chain participation and Connectkit integration: 
 
 - Citizens can invite their friends to join the transport volunteers community. Once they join, they need to deposit 9.90 GHO on a monthly basis. The money is automatically invested in Aave lending pools.
 
