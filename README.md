@@ -5,7 +5,7 @@ Opportunity: Enhancing road safety through smart incentivization of incident rep
 
 Problem: Rising road incidents and the need for early detection and prevention by better incentivizing citizen developers. Ability to sustain citizen initiatives by decentralized QR code based affiliate marketing for merchants.
 
-Solution: AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for spare parts dynamic NFT.
+Solution: AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
  
 Core Objectives:
 - Decentralized platform for incident reporting and summarization by citizens.
