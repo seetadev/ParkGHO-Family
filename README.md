@@ -58,12 +58,14 @@ We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE 
 
 - Volunteers have a strong incentive to invite their friends and make the initiative go viral. For every referral they make, they get a 1.5% bonus, and for every second level referral they get another 1% bonus. The bonus is calculated on the interest.
 
-  Please visit https://github.com/seetadev/ParkGHO-Family/tree/main/Aave-GHO-Lending-Loki and https://drive.google.com/drive/u/1/folders/1fgDkLeLEqng1YvVU6XcCkdUm0ejmsTXZ 
+  Please visit https://github.com/seetadev/ParkGHO-Family/tree/main/Aave-GHO-Lending-Loki and https://drive.google.com/drive/u/1/folders/1fgDkLeLEqng1YvVU6XcCkdUm0ejmsTXZ
 
-
-#  Incident Analytics
+   #  Incident Analytics
 
   Incident Analytics integration with EtherCalc using ConnectKitXLS and CCIP,  Chainlink Functions: https://ethercalc.net/7ftncitlfkl9
+
+
+
 
 
 
