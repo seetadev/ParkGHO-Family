@@ -24,7 +24,9 @@ Core Objectives:
   
 - Integration of advanced technologies for incident summarization, detection and prevention.
 
-Vercel website: https://park-gho-family-project-deploy.vercel.app/
+Vercel website: https://park-gho-family-project-deploy.vercel.app/ 
+
+Pitch Deck, Demos and Screenshots at https://drive.google.com/drive/u/1/folders/1fgDkLeLEqng1YvVU6XcCkdUm0ejmsTXZ
 
 Pay using ConnectKit based decentralized Wallet built supporting integrations AAVE protocol and GHO stable coins, Chainlink CCIP.
 
@@ -35,6 +37,8 @@ Pay using ConnectKit based decentralized Wallet built supporting integrations AA
 - User-friendly interface for convenient navigation and control over your digital assets.
 
 Vercel Deployment: https://park-gho-family-project-deploy.vercel.app/wallet
+
+Demos and Screenshots at https://drive.google.com/drive/u/1/folders/1fgDkLeLEqng1YvVU6XcCkdUm0ejmsTXZ
 
 We are developing a facilitator for the Aave GHO ecosystem to tackle both challenges of citizen participation for reporting road incidents and better incentivization for citizen developers focused on safe mobility solutions:
 
@@ -75,6 +79,8 @@ Please visit https://github.com/seetadev/ParkGHO-Family/tree/main/Mile-Connectki
    #  Incident Analytics
 
   Incident Analytics integration with EtherCalc using ConnectKitXLS and CCIP,  Chainlink Functions: https://ethercalc.net/7ftncitlfkl9
+
+  
 
 
 
