@@ -50,6 +50,8 @@ We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE 
 - Seamless management of fiat and crypto payment options across desktop and mobile platforms.
 - User-friendly interface for convenient navigation and control over digital assets.
 
+Please visit https://github.com/seetadev/ParkGHO-Family/tree/main/Mile-Connectkit-Family
+
 # Aave User Adoption
 
  Workflow for enabling Aave citizen adoption using GHO based Aave lending and payments, Loki Protocol project template for Aave Credit Delegation, Chainlink CCIP, Functions for cross chain participation and Connectkit integration: 
