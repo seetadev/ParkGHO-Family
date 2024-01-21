@@ -1,0 +1,15 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "hardhat": "^2.11.2",
+    "typechain": "^8.1.0"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.4.1",
+    "@nomiclabs/hardhat-ethers": "^2.1.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "@superfluid-finance/ethereum-contracts": "^1.4.1",
+    "@superfluid-finance/sdk-core": "^0.3.3-dev.9dad1ad.0"
+  }
+}
