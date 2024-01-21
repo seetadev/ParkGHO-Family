@@ -33,7 +33,7 @@ We are developing a facilitator for the Aave GHO ecosystem to tackle both challe
 - Collaborative Decision by Aave Governance
 This enables determination and allocation of a Facilitator to a specific Bucket capacity to enable bootstrapping of GHO liquidity and the GHO market.
 
-Facilitator
+# GHO Facilitator
 - This role enables generation and burning of GHO tokens in a trustless manner;
 - Each Facilitator is allocated a Bucket with a specified Capacity;
 - Using Ethereum or Ethereum based ERC20 tokens as collateral for GHO; 
@@ -47,6 +47,15 @@ We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE 
 - Purchase Ethereum based tokens using credit and debit cards, as well as various crypto assets for South Asian countries where the majority of tokens cannot be withdrawn from exchanges to wallets.
 - Seamless management of fiat and crypto payment options across desktop and mobile platforms.
 - User-friendly interface for convenient navigation and control over digital assets.
+
+# Workflow for enabling Aave adoption using GHO based lending and payments and vaults, Loki Protocol project template, Chainlink CCIP for cross chain participation and Connectkit integration: 
+
+- Citizens can invite their friends to join the transport volunteers community. Once they join, they need to deposit 9.90 GHO on a monthly basis. The money is automatically invested in Aave lending pools.
+
+- Volunteers who miss their payments are sent 3 reminders. They can withdraw what they deposited, but won't get any of the interest. Their interest is divided for remaining players.
+
+- Volunteers have a strong incentive to invite their friends and make the initiative go viral. For every referral they make, they get a 1.5% bonus, and for every second level referral they get another 1% bonus. The bonus is calculated on the interest.
+
 
 
 
