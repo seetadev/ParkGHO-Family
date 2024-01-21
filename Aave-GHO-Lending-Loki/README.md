@@ -1,4 +1,4 @@
-Workflow for enabling Aave adoption using GHO based lending and payments and vaults, Loki Protocol: 
+Workflow for enabling Aave adoption using GHO based Aave lending and payments, Loki Protocol for Aave Credit Delegation: 
 
 Citizens can invite their friends to join the transport volunteers community. Once they join, they need to deposit 9.90 GHO on a monthly basis. The money is automatically invested in Aave lending pools.
 
