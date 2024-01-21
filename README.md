@@ -1,6 +1,6 @@
 # ParkGHO-Family
 
-Revolutionizing Sustainable Mobility; Road Safety using GHO stablecoin, Aave Protocol, ConnectKit based Wallet, ConnectKit XLS and Chainlink CCIP integration with QR code dapp, Chainlink Functions.
+Revolutionizing Sustainable Mobility; Road Safety using GHO stablecoin, Aave Protocol, ConnectKit based Wallet, ConnectKit XLS and Chainlink CCIP integration with QR code dapp, Chainlink Functions and EtherCalc.
 
 # Opportunity
 
@@ -10,12 +10,15 @@ Enhancing road safety through smart incentivization of incident reporting by cit
 
 Rising road incidents and the need for early detection and prevention by better incentivizing citizen developers. Ability to sustain citizen initiatives by decentralized QR code based affiliate marketing for merchants.
 
-Solution: AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
+# Solution 
+
+AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
  
 Core Objectives:
+
 - Decentralized platform for incident reporting and summarization by citizens.
   
-- Smart incentivization using GHO stablecoin, Family Wallet and Chainlink CCIP integration with QR code dapp.
+- Smart incentivization using GHO stablecoin, Family Wallet and Chainlink CCIP integration with QR code dapp, EtherCalc.
   
 - Community-driven approach to improving road safety backed by AAVE protocol.
   
@@ -23,7 +26,7 @@ Core Objectives:
 
 Vercel website: https://park-gho-family-project-deploy.vercel.app/
 
-Pay using Family Wallet built using Connectkit supporting integrations AAVE protocol and GHO stable coins, Chainlink CCIP.
+Pay using ConnectKit based decentralized Wallet built supporting integrations AAVE protocol and GHO stable coins, Chainlink CCIP.
 
 - Effortless DeFi and NFT integration for a decentralized financial future.
 - Securely send and redeem GHO based stable coins with an expiry for redemption.
