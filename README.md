@@ -41,6 +41,8 @@ This enables determination and allocation of a Facilitator to a specific Bucket 
 - Citizen is able to ERC20 tokens as collateral and they can send their assets (collateral) to Aave protocol to earn an interest.
 - Cross chain interoperability using Chainlink CCIP.
 
+  Please visit  https://drive.google.com/drive/u/1/folders/1fgDkLeLEqng1YvVU6XcCkdUm0ejmsTXZ
+
 We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE protocol and GHO stable coins: 
 - Effortless DeFi and NFT integration for a decentralized financial future.
 - Securely send and redeem GHO based stable coins with an expiry for redemption.
