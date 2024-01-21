@@ -1,6 +1,10 @@
-<a href="https://docs.family.co/connectkit">
-  <img width="1080" alt="connectkit" src="https://github.com/family/connectkit/assets/1930210/87c2e868-3228-44b8-82c3-a38adf6d1bbf">
-</a>
+We are developing Mile Wallet built using Connectkit, AAVE protocol and GHO stable coins:
+
+Effortless DeFi and NFT integration for a decentralized financial future.
+Securely send and redeem GHO based stable coins with an expiry for redemption.
+Purchase Ethereum based tokens using credit and debit cards, as well as various crypto assets for South Asian countries where the majority of tokens cannot be withdrawn from exchanges to wallets.
+Seamless management of fiat and crypto payment options across desktop and mobile platforms.
+User-friendly interface for convenient navigation and control over digital assets.
 
 
 
