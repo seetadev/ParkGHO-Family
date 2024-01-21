@@ -48,7 +48,9 @@ We are also developing Mile Wallet built using Connectkit, Chainlink CCIP, AAVE 
 - Seamless management of fiat and crypto payment options across desktop and mobile platforms.
 - User-friendly interface for convenient navigation and control over digital assets.
 
-# Workflow for enabling Aave adoption using GHO based lending and payments and vaults, Loki Protocol project template, Chainlink CCIP for cross chain participation and Connectkit integration: 
+# Aave User Adoption
+
+ Workflow for enabling Aave citizen adoption using GHO based lending and payments and vaults, Loki Protocol project template, Chainlink CCIP for cross chain participation and Connectkit integration: 
 
 - Citizens can invite their friends to join the transport volunteers community. Once they join, they need to deposit 9.90 GHO on a monthly basis. The money is automatically invested in Aave lending pools.
 
