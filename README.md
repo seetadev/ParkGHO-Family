@@ -8,19 +8,25 @@ Problem: Rising road incidents and the need for early detection and prevention b
 Solution: AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for spare parts dynamic NFT.
  
 Core Objectives:
-Decentralized platform for incident reporting and summarization by citizens. 
-Smart incentivization using GHO stablecoin, Family Wallet and Chainlink CCIP integration with QR code dapp.
-Community-driven approach to improving road safety backed by AAVE protocol.
-Integration of advanced technologies for incident summarization, detection and prevention.
+- Decentralized platform for incident reporting and summarization by citizens.
+  
+- Smart incentivization using GHO stablecoin, Family Wallet and Chainlink CCIP integration with QR code dapp.
+  
+- Community-driven approach to improving road safety backed by AAVE protocol.
+  
+- Integration of advanced technologies for incident summarization, detection and prevention.
+
+Vercel website: https://park-gho-family-project-deploy.vercel.app/
 
 Pay using Family Wallet built using Connectkit supporting integrations AAVE protocol and GHO stable coins, Chainlink CCIP.
+
 - Effortless DeFi and NFT integration for a decentralized financial future.
 - Securely send and redeem GHO based stable coins with an expiry for redemption.
 - Purchase Ethereum based tokens using credit and debit cards, as well as various crypto assets for South Asian countries where the majority of tokens cannot be withdrawn from exchanges to wallets.
 - Seamless management of fiat and crypto payment options across desktop and mobile platforms.
 - User-friendly interface for convenient navigation and control over your digital assets.
 
-
+Vercel Deployment: https://park-gho-family-project-deploy.vercel.app/wallet
 
 We are developing a facilitator for the Aave GHO ecosystem to tackle both challenges of citizen participation for reporting road incidents and better incentivization for citizen developers focused on safe mobility solutions:
 
