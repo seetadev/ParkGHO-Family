@@ -1,9 +1,14 @@
 # ParkGHO-Family
-Revolutionizing Sustainable Mobility; Road Safety
 
-Opportunity: Enhancing road safety through smart incentivization of incident reporting by citizens.
+Revolutionizing Sustainable Mobility; Road Safety using GHO stablecoin, Aave Protocol, ConnectKit based Wallet, ConnectKit XLS and Chainlink CCIP integration with QR code dapp, Chainlink Functions.
 
-Problem: Rising road incidents and the need for early detection and prevention by better incentivizing citizen developers. Ability to sustain citizen initiatives by decentralized QR code based affiliate marketing for merchants.
+# Opportunity
+
+Enhancing road safety through smart incentivization of incident reporting by citizens.
+
+# Problem 
+
+Rising road incidents and the need for early detection and prevention by better incentivizing citizen developers. Ability to sustain citizen initiatives by decentralized QR code based affiliate marketing for merchants.
 
 Solution: AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
  
