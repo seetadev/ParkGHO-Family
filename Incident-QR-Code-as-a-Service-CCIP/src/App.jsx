@@ -1,7 +1,7 @@
-import Hero from "./components/Hero";
-import Demo from "./components/Demo";
 
+import { Route, Routes } from 'react-router-dom'
 import "./App.css";
+import IncidentAnalyzer from '../IncidentAnalyzer';
 
 const App = () => {
   return (
@@ -11,8 +11,10 @@ const App = () => {
       </div>
 
       <div className='app'>
-        <Hero />
-        <Demo />
+        <Routes>
+          <Route path='/' Component={IncidentAnalyzer}></Route>
+        </Routes>
+       
       </div>
     </main>
   );
