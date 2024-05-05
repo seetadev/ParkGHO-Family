@@ -1,6 +1,7 @@
-
 import { useState } from 'react';
-
+import ABI from './services/abi.json';
+import uploadToIPFS from './services';
+import axios from 'axios';
 const IncidentReporter = () => {
   // State variables for incident details
   const [incidentName, setIncidentName] = useState('');
@@ -8,11 +9,26 @@ const IncidentReporter = () => {
   const [metamaskAddress, setMetamaskAddress] = useState('');
   const [incidentLevel, setIncidentLevel] = useState('medium');
   const [description, setDescription] = useState('');
-  const [incidentImage, setIncidentImage] = useState(null);
+  const [incidentImageUrl, setIncidentImageUrl] = useState(null);
+  const ContractAddress = '0xEc609677Cd0cb0f6D1B49eCf8eEE2528e2d77cF4';
+  // State and functions for file upload
+  const [selectedFile, setSelectedFile] = useState();
+  console.log(incidentImageUrl);
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
+  const changeHandler = async (event) => {
+    setSelectedFile(event.target.files[0]);
+    console.log(selectedFile);
+    const ipfsUrl = await handleImageUpload(selectedFile);
+    console.log("this is the uploaded ipfs url", ipfsUrl);
+
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Upload the image to IPFS
+    const ipfsUrl = await handleImageUpload(selectedFile);
+
     // Here, you can add the logic to submit the incident report to the blockchain or any other desired action.
     console.log('Incident Report:', {
       incidentName,
@@ -20,9 +36,79 @@ const IncidentReporter = () => {
       metamaskAddress,
       incidentLevel,
       description,
-      incidentImage,
+      incidentImageUrl: ipfsUrl,
     });
   };
+
+  
+
+  const handleImageUpload = async (file) => {
+    if (file) {
+      try {
+        // Create a FormData object to send the file
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Send a POST request to Pinata API to pin the file to IPFS
+        const resFile = await axios({
+          method: "post",
+          url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          data: formData,
+          headers: {
+            pinata_api_Key: `d2f21938c99d34d106be`,
+            pinata_secret_api_key: `06c3efb5358411001adc2d3c9dd4655aad47f9a29d206a29d7ca6cf2a595a891`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        // Construct the image URL with the IPFS hash
+        const ImgHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
+
+        // Call the contract's add function to store the image URL
+        setIncidentImageUrl(ImgHash);
+
+        // Upload the JSON metadata to IPFS
+        const jsonString = {
+          name: `${incidentName}-By ${reporterName}`,
+          description: description,
+          image: ImgHash,
+          attributes: [
+            {
+              trait_type: "Incident Level",
+              value: incidentLevel,
+            },
+          ],
+        };
+        
+        const jsonData = new Blob([JSON.stringify(jsonString)], { type: "application/json" });
+        const metadataFile = new File([jsonData], "metadata.json", { type: "application/json" });
+        const metadataFormData = new FormData();
+        metadataFormData.append("file", metadataFile);
+
+        const resMetadata = await axios({
+          method: "post",
+          url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          data: metadataFormData,
+          headers: {
+            pinata_api_Key: `d2f21938c99d34d106be`,
+            pinata_secret_api_key: `06c3efb5358411001adc2d3c9dd4655aad47f9a29d206a29d7ca6cf2a595a891`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const metadataHash = `https://gateway.pinata.cloud/ipfs/${resMetadata.data.IpfsHash}`;
+        console.log("Metadata IPFS URL:", metadataHash);
+
+        return metadataHash;
+      } catch (error) {
+        alert("Unable to Upload Image and Metadata.");
+        console.error("Error:", error);
+      }
+    }
+  };
+
+
+
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -109,7 +195,7 @@ const IncidentReporter = () => {
             <input
               type="file"
               id="incidentImage"
-              onChange={(e) => setIncidentImage(e.target.files[0])}
+              onChange={changeHandler}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               accept="image/*"
             />
@@ -117,7 +203,7 @@ const IncidentReporter = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300"
+            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300 font-extrabold"
           >
             Submit
           </button>

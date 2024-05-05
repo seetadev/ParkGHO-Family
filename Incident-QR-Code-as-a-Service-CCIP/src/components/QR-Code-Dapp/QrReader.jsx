@@ -4,6 +4,7 @@ import "./index.css";
 // Qr Scanner
 import QrScanner from "qr-scanner";
 import QrFrame from "./qr-code-frame.png";
+import { Link } from "react-router-dom";
 
 const QrReader = () => {
   // QR States

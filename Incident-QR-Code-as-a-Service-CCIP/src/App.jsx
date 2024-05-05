@@ -2,7 +2,8 @@
 import { Route, Routes } from 'react-router-dom'
 import "./App.css";
 import IncidentAnalyzer from './IncidentAnalyzer';
-import QrDapp from './QrDapp';
+import QrDapp from './QrDappScan';
+import IncidentReportPage from './IncidentReport';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Routes>
           <Route path='/' Component={IncidentAnalyzer}></Route>
           <Route path='/qr-dapp' Component={QrDapp}></Route>
+          <Route path='/incident-reporter' Component={IncidentReportPage}></Route>
         </Routes>
        
       </div>
