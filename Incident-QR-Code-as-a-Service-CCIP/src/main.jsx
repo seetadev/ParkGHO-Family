@@ -6,13 +6,17 @@ import {
 } from "react-router-dom";
 import App from "./App";
 import { store } from "./services/store";
+import { Web3ModalProvider } from "./components/QR-Code-Dapp/Web3WalletProvider";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <Web3ModalProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Web3ModalProvider>
     </Router>
   </React.StrictMode>
 );
