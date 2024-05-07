@@ -11,13 +11,15 @@ const QrDappScan = () => {
   return (
     <div className='w-full p-5'>
       <ConnectButton />
-      <button
-        onClick={toggleComponent}
-        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-      >
-        {showComponent ? 'Close' : 'Scan QR to Report Incident'}
-      </button>
-      {showComponent && <QrReader/>}
+      <div className={`flex justify-center items-center ${!showComponent && 'p-80'} `}>
+        <button
+          onClick={toggleComponent}
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        >
+          {showComponent ? 'Close' : 'Scan QR to Report Incident'}
+        </button>
+      </div>
+      {showComponent && <QrReader />}
     </div>
   )
 }

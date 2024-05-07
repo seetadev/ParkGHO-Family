@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import ABI from './services/abi.json';
-import uploadToIPFS from './services';
 import axios from 'axios';
+import { useAccount } from 'wagmi'
+
+import { useWriteContract } from 'wagmi'
+
 const IncidentReporter = () => {
+
+  const { address,isConnected } = useAccount()
+
+
   // State variables for incident details
   const [incidentName, setIncidentName] = useState('');
   const [reporterName, setReporterName] = useState('');
@@ -10,16 +17,40 @@ const IncidentReporter = () => {
   const [incidentLevel, setIncidentLevel] = useState('medium');
   const [description, setDescription] = useState('');
   const [incidentImageUrl, setIncidentImageUrl] = useState(null);
+  const [tokenURI, setTokenURI] = useState(null);
+
+
+
   const ContractAddress = '0xEc609677Cd0cb0f6D1B49eCf8eEE2528e2d77cF4';
   // State and functions for file upload
   const [selectedFile, setSelectedFile] = useState();
-  console.log(incidentImageUrl);
+  console.log("this is incident image url", incidentImageUrl);
+
+
+  const { data, isLoading, writeContract } = useWriteContract();
+
+
+  const getBalance = async () => {
+    try {
+      if (!isConnected) throw new Error('User disconnected');
+
+      const tx = writeContract({
+        abi:ABI,
+        address: ContractAddress,
+        functionName: 'safeMint',
+        args: [address, tokenURI],
+      });
+
+      console.log('Transaction hash:', tx);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
 
   const changeHandler = async (event) => {
     setSelectedFile(event.target.files[0]);
     console.log(selectedFile);
-    const ipfsUrl = await handleImageUpload(selectedFile);
-    console.log("this is the uploaded ipfs url", ipfsUrl);
 
   };
 
@@ -40,7 +71,7 @@ const IncidentReporter = () => {
     });
   };
 
-  
+
 
   const handleImageUpload = async (file) => {
     if (file) {
@@ -79,7 +110,7 @@ const IncidentReporter = () => {
             },
           ],
         };
-        
+
         const jsonData = new Blob([JSON.stringify(jsonString)], { type: "application/json" });
         const metadataFile = new File([jsonData], "metadata.json", { type: "application/json" });
         const metadataFormData = new FormData();
@@ -97,8 +128,8 @@ const IncidentReporter = () => {
         });
 
         const metadataHash = `https://gateway.pinata.cloud/ipfs/${resMetadata.data.IpfsHash}`;
+        setTokenURI(metadataHash);
         console.log("Metadata IPFS URL:", metadataHash);
-
         return metadataHash;
       } catch (error) {
         alert("Unable to Upload Image and Metadata.");
@@ -114,100 +145,104 @@ const IncidentReporter = () => {
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-md p-6 sm:p-8 md:p-10">
         <h1 className="text-2xl font-bold mb-6 text-center">Incident Reporter</h1>
-        <form onSubmit={handleSubmit}>
-          {/* Incident Name */}
-          <div className="mb-4">
-            <label htmlFor="incidentName" className="block font-bold mb-2">
-              Incident Name
-            </label>
-            <input
-              type="text"
-              id="incidentName"
-              value={incidentName}
-              onChange={(e) => setIncidentName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          {/* Reporter Name */}
-          <div className="mb-4">
-            <label htmlFor="reporterName" className="block font-bold mb-2">
-              Reporter Name
-            </label>
-            <input
-              type="text"
-              id="reporterName"
-              value={reporterName}
-              onChange={(e) => setReporterName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          {/* Metamask Address */}
-          <div className="mb-4">
-            <label htmlFor="metamaskAddress" className="block font-bold mb-2">
-              Metamask Address
-            </label>
-            <input
-              type="text"
-              id="metamaskAddress"
-              value={metamaskAddress}
-              onChange={(e) => setMetamaskAddress(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          {/* Incident Level */}
-          <div className="mb-4">
-            <label htmlFor="incidentLevel" className="block font-bold mb-2">
-              Incident Level
-            </label>
-            <select
-              id="incidentLevel"
-              value={incidentLevel}
-              onChange={(e) => setIncidentLevel(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="medium">Medium</option>
-              <option value="critical">Critical</option>
-            </select>
-          </div>
-          {/* Description */}
-          <div className="mb-4">
-            <label htmlFor="description" className="block font-bold mb-2">
-              Description
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows="4"
-              required
-            />
-          </div>
-          {/* Incident Image */}
-          <div className="mb-6">
-            <label htmlFor="incidentImage" className="block font-bold mb-2">
-              Incident Image
-            </label>
-            <input
-              type="file"
-              id="incidentImage"
-              onChange={changeHandler}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              accept="image/*"
-            />
-          </div>
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300 font-extrabold"
+        {/* <form onSubmit={handleSubmit}> */}
+        {/* Incident Name */}
+        <div className="mb-4">
+          <label htmlFor="incidentName" className="block font-bold mb-2">
+            Incident Name
+          </label>
+          <input
+            type="text"
+            id="incidentName"
+            value={incidentName}
+            onChange={(e) => setIncidentName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        {/* Reporter Name */}
+        <div className="mb-4">
+          <label htmlFor="reporterName" className="block font-bold mb-2">
+            Reporter Name
+          </label>
+          <input
+            type="text"
+            id="reporterName"
+            value={reporterName}
+            onChange={(e) => setReporterName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        {/* Incident Level */}
+        <div className="mb-4">
+          <label htmlFor="incidentLevel" className="block font-bold mb-2">
+            Incident Level
+          </label>
+          <select
+            id="incidentLevel"
+            value={incidentLevel}
+            onChange={(e) => setIncidentLevel(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           >
-            Submit
-          </button>
-        </form>
+            <option value="medium">Medium</option>
+            <option value="critical">Critical</option>
+          </select>
+        </div>
+        {/* Description */}
+        <div className="mb-4">
+          <label htmlFor="description" className="block font-bold mb-2">
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows="4"
+            required
+          />
+        </div>
+        {/* Incident Image */}
+        <div className="mb-6">
+          <label htmlFor="incidentImage" className="block font-bold mb-2">
+            Incident Image
+          </label>
+          <input
+            type="file"
+            id="incidentImage"
+            onChange={changeHandler}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            accept="image/*"
+          />
+        </div>
+        {/* Submit Button */}
+
+        {
+          tokenURI ? (
+            <button
+              onClick={
+                getBalance
+              }
+
+              className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300 font-extrabold"
+            >
+              Create Incident NFT
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300 font-extrabold"
+            >
+              Submit Data
+            </button>
+          )
+        }
+
+       
+
+        {/* </form> */}
       </div>
     </div>
   );

@@ -6,11 +6,11 @@ export default function ConnectButton() {
   const { address, isDisconnected } = useAccount()
 
   function showAddress(str) {
-    if (str.length <= 7) {
+    if (str?.length <= 7) {
       return str; 
     } else {
-      const start = str.substring(0, 4);
-      const end = str.substring(str.length - 4);
+      const start = str?.substring(0, 4);
+      const end = str?.substring(str.length - 4);
       return `${start}...${end}`;
     }
   }
