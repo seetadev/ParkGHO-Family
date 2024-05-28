@@ -14,11 +14,12 @@ const QrReader = () => {
   const [scannedResult, setScannedResult] = useState("");
 
   const onScanSuccess = (result) => {
-    console.log(result);
-    setScannedResult(result?.data);
-    if(scannedResult){
-      navigate(`/${scannedResult}`);
-    }
+    navigate(`/${result?.data}`);
+    console.log( "this i the scanned result",result);
+    // setScannedResult(result?.data);
+    // if(scannedResult){
+    //   navigate(`/${scannedResult}`);
+    // }
   };
 
   
@@ -83,7 +84,7 @@ const QrReader = () => {
             color: "black",
           }}
         >
-          Scanned Result: {scannedResult}
+          {/* Scanned Result: {scannedResult} */}
         </p>
       )}
     </div>
