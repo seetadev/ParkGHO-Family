@@ -2,7 +2,8 @@ import { useState } from 'react';
 import ABI from './services/abi.json';
 import axios from 'axios';
 import { useAccount } from 'wagmi'
-
+import addressData from './services/address.json';
+import CCIPABI from './services/CCIP.json';
 import { useWriteContract } from 'wagmi'
 
 const IncidentReporter = () => {
@@ -18,6 +19,7 @@ const IncidentReporter = () => {
   const [description, setDescription] = useState('');
   const [incidentImageUrl, setIncidentImageUrl] = useState(null);
   const [tokenURI, setTokenURI] = useState(null);
+  const [tx, setTx] = useState(null);
 
 
 
@@ -30,15 +32,15 @@ const IncidentReporter = () => {
   const { data, isLoading, writeContract } = useWriteContract();
 
 
-  const getBalance = async () => {
+  const mint = async () => {
     try {
       if (!isConnected) throw new Error('User disconnected');
 
-      const tx = writeContract({
-        abi:ABI,
-        address: ContractAddress,
-        functionName: 'safeMint',
-        args: [address, tokenURI],
+      const tx = await writeContract({
+        abi:CCIPABI,
+        address: addressData.ccipAddress,
+        functionName: 'mintOnSepolia',
+        args: [tokenURI],
       });
 
       console.log('Transaction hash:', tx);
@@ -223,7 +225,7 @@ const IncidentReporter = () => {
           tokenURI ? (
             <button
               onClick={
-                getBalance
+                mint
               }
 
               className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300 font-extrabold"
