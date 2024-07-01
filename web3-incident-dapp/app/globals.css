@@ -21,6 +21,7 @@ body {
   --to: hsla(0, 0%, 0%, 0);
   --size: 300px;
   background-color: black;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 } 
 
 @layer utilities {

@@ -1,19 +1,33 @@
-"use client"
+"use client";
 import Image from "next/image";
-
+import { CiLocationArrow1 } from "react-icons/ci";
 export default function Home() {
-  const clickHandler =()=>{
+  const clickHandler = () => {
     window.location.href = "/incident-app";
-  }
+  };
   return (
-    <main className="flex w-full h-full min-h-screen flex-col items-center justify-between  ">
-     <div>
-      <button
-      onClick={clickHandler}
-       className="shadow border border-white text-white  rounded-full p-3  px-7 hover:shadow-lg transitions-all duration-200 font-bold hover:bg-white hover:text-black mt-[20em]">
-        Getting started
-      </button>
-     </div>
-    </main>
+      <div className="flex lg:flex-row flex-col mt-[8em]  justify-evenly w-full  items-center">
+        <div>
+          <p className="text-8xl text-white font-extrabold">
+            Deci<span className="text-red-400">Report</span>
+          </p>
+          <p className="text-white text-xl mt-4 ">
+            Report your road incidents securily and transparently
+          </p>
+
+          <div className="flex  w-full justify-between">
+            <button
+              onClick={clickHandler}
+              className="m-auto flex gap-1 items-center  shadow border border-red-400 text-white  rounded-full p-3  px-7 hover:shadow-lg transitions-all duration-200 font-bold hover:bg-red-400 hover:text-black mt-[7em]"
+            >
+              Report Your Incident 
+             <span className="rotate-45 text-xl text-white font-bold"> <CiLocationArrow1/></span>
+            </button>
+          </div>
+        </div>
+        <div className="">
+          <Image src="/road-2.png" alt="image" width={900} height={900} />
+        </div>
+      </div>
   );
 }
