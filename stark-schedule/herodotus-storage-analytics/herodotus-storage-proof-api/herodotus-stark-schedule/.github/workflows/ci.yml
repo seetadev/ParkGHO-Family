@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+  merge_group:
+  pull_request:
+
+jobs:
+  formatting-and-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Scarb
+        uses: software-mansion/setup-scarb@v1
+
+      - name: Setup snforge
+        uses: foundry-rs/setup-snfoundry@v3
+      
+      - name: Format code
+        run: scarb fmt --check
+
+      - name: Test
+        run: snforge test

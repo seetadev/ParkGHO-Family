@@ -1,0 +1,9 @@
+We are using Herodotus’s Storage Proof API to enable patients to prove ownership of Medical Incident NFT they hold on Starknet using storage proofs. The Herodotus API is used to generate the needed storage proof and verify it on Starknet. 
+
+Herodotus’s Storage Proof API a service aims at providing:
+■Secure data storage, transparent data movement and data authenticity.
+■Improving Data Transparency in Medication
+
+Data Integrity and Responsible AIOps using Herodotus’s Storage Proof API: We are extending the implementation of Herodotus’s Storage Proof API to verify data integrity and prioritize the ranking of actions (pending, in progress and completed) at the government hospital to be undertaken on medical incidents depending upon the status (pending, in progress and completed). We are developing custom Web3 storage and data analytics solutions using Herodotus and tools to enable no code, low code analytics tooling using an open source analytics and visualization tool, namely, HerodotusXLS, which enables tabulation, organization, collaboration, visualization, graphing and charting.
+
+Please visit Demo, Screenshots and Screencasts at  https://drive.google.com/drive/u/1/folders/1jkIPsjj9zyy7SQ0Yp5pYwlca5a4ykqqZ
