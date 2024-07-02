@@ -12,7 +12,7 @@ Rising road incidents and the need for early detection and prevention by better 
 
 # Solution 
 
-AAVE Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
+Blockchain-based ecosystem focused on sustaining citizen initiatives on road incident prevention using GHO stablecoin, Family Wallet and Chainlink CCIP integration and Chainlink Functions for Incident Report dynamic NFT.
  
 Core Objectives:
 
