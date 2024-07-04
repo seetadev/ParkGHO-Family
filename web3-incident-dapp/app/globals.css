@@ -35,7 +35,7 @@ body {
   --from: rgba(120,119,198,0.3);
   --to: hsla(0, 0%, 0%, 0);
   --size: 800px;
-  background-color: black;
+  background-color: blue;
   background-image: radial-gradient(circle var(--size) at center, var(--from), var(--to));
 
 }

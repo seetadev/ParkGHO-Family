@@ -23,6 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { slice } from "viem";
+import FileUploader from '@/components/lighthouse';
+import UploadForm from '@/components/Json';
 
 const IncidentReporter = () => {
   const { address, isConnected, chain } = useAccount();
@@ -194,7 +196,7 @@ const IncidentReporter = () => {
   };
 
   return (
-    <div className=" flex-col  gap-3 bg-black min-h-screen flex  items-center justify-center">
+    <div className=" flex-col  gap-3 bg-white min-h-screen flex  items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-md p-6 sm:p-8 md:p-10">
         <h1 className="text-2xl font-bold mb-6 text-center">
           {" "}
@@ -373,6 +375,9 @@ const IncidentReporter = () => {
           }
         }}>Go</button>
       </div>
+
+      <FileUploader/>
+      <UploadForm/>
     </div>
   );
 };
