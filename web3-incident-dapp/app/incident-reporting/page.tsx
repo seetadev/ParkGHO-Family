@@ -1,6 +1,6 @@
 // /app/components/IncidentReportForm.tsx
 "use client";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useRef } from "react";
 import {
   Select,
   SelectContent,
@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
+import { useMapContext } from "../context/MapContext";
 import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
 import addressData from "../../utils/address.json";
 import AvalancheAbi from "../../utils/AvalancheAbi.json";
@@ -18,12 +19,28 @@ import OptimismAbi from "../../utils/OptimismAbi.json";
 import ArbitrumAbi from "../../utils/ArbitrumAbi.json";
 import PolygonAbi from "../../utils/PolygonAmoy.json";
 import { ToastContainer, toast } from "react-toastify";
+import Map from "@/components/Map";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const IncidentReportForm: React.FC = () => {
   var ContractAbi: any;
   var ContractAddress: any;
   var _function: any;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const { marker, mapCenter } = useMapContext();
   const [selectedValue, setSelectedValue] = useState("");
   const [incidentType, setIncidentType] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -42,17 +59,21 @@ const IncidentReportForm: React.FC = () => {
   const [nftImage, setNftImage] = useState<FileList | null>(null);
   const [mediaFiles, setMediaFiles] = useState<FileList | null>(null);
   const [message, setMessage] = useState<string>("");
+  const [uploadStatus, setUploadStatus] = useState<string>("");
+  const [cid, setCid] = useState<string>("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("incidentType", incidentType);
     formData.append("date", date);
     formData.append("time", time);
-    formData.append("location", location);
+    if (marker) {
+      formData.append("location", `${marker.lat}, ${marker.lng}`);
+    }
     formData.append("severity", severity);
-    formData.append("reporterName", reporterName);
+    formData.append("name", reporterName);
     formData.append("contactInfo", contactInfo);
     formData.append("vehicleType", vehicleType);
     formData.append("licensePlate", licensePlate);
@@ -62,20 +83,69 @@ const IncidentReportForm: React.FC = () => {
     formData.append("roadConditions", roadConditions);
     formData.append("trafficConditions", trafficConditions);
 
-    if (nftImage) {
-      formData.append("nftImage", nftImage[0]);
+    
+    if(cid){
+      formData.append("image", cid);
     }
 
-    if (mediaFiles) {
-      Array.from(mediaFiles).forEach((file) => {
-        formData.append("mediaFiles", file);
-      });
+    if (formData) {
+      try {
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setMessage("Data saved successfully!");
+          console.log(result?.ipfsUrl);
+        } else {
+          setMessage(result.error || "Something went wrong.");
+        }
+      } catch (error) {
+        setMessage("An error occurred while saving the data.");
+      }
     }
 
     // Log FormData entries for debugging
     // @ts-ignore
     for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
+      console.log(`${pair[0]}: ${pair[1]}`, message);
+    }
+  };
+
+  const uploadFile = async () => {
+    const fileInput = fileInputRef.current;
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+      alert("Please select a file to upload");
+      return;
+    }
+
+    const file = fileInput.files[0];
+    setUploadStatus("Uploading...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload file");
+      }
+
+      const result = await response.json();
+      console.log("Upload result:", result.ipfsUrl);
+
+      setUploadStatus(`Upload completed. Your CID is ${result.ipfsCid}`);
+      setCid(result.ipfsUrl);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setUploadStatus("Upload failed. Please try again.");
     }
   };
 
@@ -115,7 +185,6 @@ const IncidentReportForm: React.FC = () => {
     switchChain({ chainId: Number(value) });
   };
 
-
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
       <h1 className="text-2xl font-bold mb-4">Road Incident Report</h1>
@@ -129,10 +198,12 @@ const IncidentReportForm: React.FC = () => {
             onChange={(e) => setIncidentType(e.target.value)}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
-            <option value="">Select Type</option>
-            <option value="Accident">Accident</option>
-            <option value="Traffic Violation">Traffic Violation</option>
-            <option value="Road Hazard">Road Hazard</option>
+            <option value="">Select incident type</option>
+            <option value="collision">Collision</option>
+            <option value="hit-and-run">Hit and Run</option>
+            <option value="vehicle-breakdown">Vehicle Breakdown</option>
+            <option value="road-hazard">Road Hazard</option>bgt
+            <option value="other">Other</option>
           </select>
         </div>
         <div className="form-group">
@@ -157,17 +228,34 @@ const IncidentReportForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <div className="form-group">
+        <div className="form-group block  ">
           <label className="block text-sm font-medium text-gray-700">
-            Location
+            Enter Your Loaction
           </label>
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Address or Coordinates"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 "
+                variant="outline"
+              >
+                {marker
+                  ? `${marker.lat}, ${marker.lng}`
+                  : "Select Your Loaction"}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[825px]">
+              <DialogHeader>
+                <DialogTitle>Loaction</DialogTitle>
+                <DialogDescription>
+                  Enter the incident Loaction here
+                </DialogDescription>
+              </DialogHeader>
+              <Map />
+              <DialogFooter>
+                <Button type="submit">Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="form-group">
           <label className="block text-sm font-medium text-gray-700">
@@ -288,11 +376,12 @@ const IncidentReportForm: React.FC = () => {
           </label>
           <input
             type="file"
-            onChange={(e) => setNftImage(e.target.files)}
+            ref={fileInputRef}
+            id="fileUpload"
+            onChange={uploadFile}
             className="mt-1 mb-2 md:mb-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        
 
         <div>
           <Select onValueChange={handleSelectChange}>
@@ -354,8 +443,8 @@ const IncidentReportForm: React.FC = () => {
           </Select>
         </div>
 
-
         <button
+          disabled={!selectedValue || !cid}
           type="submit"
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >

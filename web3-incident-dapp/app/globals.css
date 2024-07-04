@@ -35,7 +35,7 @@ body {
   --from: rgba(120,119,198,0.3);
   --to: hsla(0, 0%, 0%, 0);
   --size: 800px;
-  background-color: blue;
+  background-color: black;
   background-image: radial-gradient(circle var(--size) at center, var(--from), var(--to));
 
 }
@@ -70,4 +70,43 @@ body {
 
 .animate {
   animation: pulse 3s infinite ease-in-out;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  font-family: sans-serif;
+  color: #333;
+  background-color: #f3e4d7;
+}
+
+/* height of the container */
+.leaflet-container {
+  height: 90vh;
+  width: 90%;
+  border-radius: 2rem;
+}
+
+.cluster-icon {
+  background-color: #333;
+  height: 2em;
+  width: 2em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px #fff;
 }
