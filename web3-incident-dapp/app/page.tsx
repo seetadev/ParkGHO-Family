@@ -8,10 +8,10 @@ export default function Home() {
   return (
       <div className="flex lg:flex-row flex-col mt-[8em]  justify-evenly w-full  items-center">
         <div>
-          <p className="text-8xl text-white font-extrabold">
+          <p className=" text-center md:text-left text-6xl md:text-8xl text-white font-extrabold">
             Deci<span className="text-red-400">Report</span>
           </p>
-          <p className="text-white text-xl mt-4 ">
+          <p className=" text-center text-white md:text-left md:text-xl mt-4 ">
             Report your road incidents securily and transparently
           </p>
 

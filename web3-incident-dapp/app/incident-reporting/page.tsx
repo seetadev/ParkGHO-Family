@@ -225,7 +225,7 @@ const IncidentReportForm: React.FC = () => {
 
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
+    <div className="mx-3 md:mx-0 mb-4 max-w-4xl mx-auto p-3 bg-white rounded-lg shadow-lg mt-8">
       <h1 className="text-2xl font-bold mb-4">Road Incident Report</h1>
       <form onSubmit={handleSubmit} className="md:grid md:grid-cols-2 gap-4">
         <div className="form-group">
@@ -422,7 +422,7 @@ const IncidentReportForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div className="my-4">
           <Select onValueChange={handleSelectChange}>
             <SelectTrigger className="w-full">
               <SelectValue
