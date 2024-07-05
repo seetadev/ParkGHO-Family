@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CiLocationArrow1 } from "react-icons/ci";
 export default function Home() {
   const clickHandler = () => {
-    window.location.href = "/incident-app";
+    window.location.href = "/incident-reporting";
   };
   return (
       <div className="flex lg:flex-row flex-col mt-[8em]  justify-evenly w-full  items-center">

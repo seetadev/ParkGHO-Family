@@ -10,9 +10,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import "react-toastify/dist/ReactToastify.css";
+
 import Image from "next/image";
 import { useMapContext } from "../context/MapContext";
-import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
+import {
+  useAccount,
+  useWriteContract,
+  useSwitchChain,
+  useSendTransaction,
+} from "wagmi";
 import addressData from "../../utils/address.json";
 import AvalancheAbi from "../../utils/AvalancheAbi.json";
 import OptimismAbi from "../../utils/OptimismAbi.json";
@@ -45,10 +52,12 @@ const IncidentReportForm: React.FC = () => {
   const [incidentType, setIncidentType] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [loader, setLoader] = useState<Boolean>(false);
   const [severity, setSeverity] = useState<string>("Minor");
   const [reporterName, setReporterName] = useState<string>("");
+  const [submitButtonText, setSubmitButtonText] = useState<string>("");
   const [contactInfo, setContactInfo] = useState<string>("");
+  const [tokenURI, setTokenURI] = useState<string>("");
   const [vehicleType, setVehicleType] = useState<string>("");
   const [licensePlate, setLicensePlate] = useState<string>("");
   const [insuranceInfo, setInsuranceInfo] = useState<string>("");
@@ -61,6 +70,61 @@ const IncidentReportForm: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [uploadStatus, setUploadStatus] = useState<string>("");
   const [cid, setCid] = useState<string>("");
+  const { address, isConnected, chain } = useAccount();
+  const { writeContract } = useWriteContract();
+
+
+  const { chains, switchChain } = useSwitchChain();
+
+  const _chains = [
+    { name: "OP Sepolia", chainId: 11155420 },
+    { name: "Arbitrum Sepolia", chainId: 421614 },
+    { name: "Avalanche Fuji", chainId: 43113 },
+    { name: "Polygon Amoy", chainId: 80002 },
+  ];
+
+  if (selectedValue === "11155420") {
+    ContractAbi = OptimismAbi;
+    ContractAddress = addressData.ccipOptimismAddress;
+    _function = "mintOnOptimism";
+  }
+  if (selectedValue === "421614") {
+    ContractAbi = ArbitrumAbi;
+    ContractAddress = addressData.ccipArbitrumAddress;
+    _function = "mintOnArbitrum";
+  }
+  if (selectedValue == "43113") {
+    ContractAbi = AvalancheAbi;
+    ContractAddress = addressData.ccipAvalancheAddress;
+    _function = "mintOnSepolia";
+  }
+  if (selectedValue == "80002") {
+    ContractAbi = PolygonAbi;
+    ContractAddress = addressData.ccipPolygonAmoyAddress;
+    _function = "mintOnOptimism";
+  }
+
+  const handleSelectChange = (value: any) => {
+    switchChain({ chainId: Number(value) });
+    setSelectedValue(value);
+  };
+  console.log(address, tokenURI,cid, ContractAbi, ContractAddress , _function);
+
+  const mint = async () => {
+    try {
+      if (!isConnected) toast("User disconnected");
+
+      const tx = writeContract({
+        abi: ContractAbi,
+        address: ContractAddress,
+        functionName: _function,
+        // @ts-ignore
+        args: [tokenURI, address],
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -83,8 +147,7 @@ const IncidentReportForm: React.FC = () => {
     formData.append("roadConditions", roadConditions);
     formData.append("trafficConditions", trafficConditions);
 
-    
-    if(cid){
+    if (cid) {
       formData.append("image", cid);
     }
 
@@ -100,12 +163,17 @@ const IncidentReportForm: React.FC = () => {
         if (response.ok) {
           setMessage("Data saved successfully!");
           console.log(result?.ipfsUrl);
+          setTokenURI(result?.ipfsUrl);
         } else {
           setMessage(result.error || "Something went wrong.");
         }
       } catch (error) {
         setMessage("An error occurred while saving the data.");
       }
+    }
+
+    if (tokenURI) {
+      setSubmitButtonText(" MetaData Uploaded, mint NFT now");
     }
 
     // Log FormData entries for debugging
@@ -147,43 +215,29 @@ const IncidentReportForm: React.FC = () => {
       console.error("Error uploading file:", error);
       setUploadStatus("Upload failed. Please try again.");
     }
+
+
+    try {
+      if (!isConnected) toast("User disconnected");
+
+      const tx = writeContract({
+        abi: ContractAbi,
+        address: ContractAddress,
+        functionName: _function,
+        // @ts-ignore
+        args: [tokenURI, address],
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+
+
+   
+
   };
 
-  const { chains, switchChain } = useSwitchChain();
 
-  const _chains = [
-    { name: "OP Sepolia", chainId: 11155420 },
-    { name: "Arbitrum Sepolia", chainId: 421614 },
-    { name: "Avalanche Fuji", chainId: 43113 },
-    { name: "Polygon Amoy", chainId: 80002 },
-  ];
-
-  if (selectedValue === "OP Sepolia") {
-    ContractAbi = OptimismAbi;
-    ContractAddress = addressData.ccipOptimismAddress;
-    _function = "mintOnOptimism";
-  }
-  if (selectedValue === "Arbitrum Sepolia") {
-    ContractAbi = ArbitrumAbi;
-    ContractAddress = addressData.ccipArbitrumAddress;
-    _function = "mintOnArbitrum";
-  }
-  if (selectedValue == "Avalanche Fuji") {
-    ContractAbi = AvalancheAbi;
-    ContractAddress = addressData.ccipAvalancheAddress;
-    _function = "mintOnSepolia";
-  }
-  if (selectedValue == "Polygon Amoy") {
-    ContractAbi = PolygonAbi;
-    ContractAddress = addressData.ccipPolygonAmoyAddress;
-    _function = "mintOnOptimism";
-  }
-
-  const handleSelectChange = (value: any) => {
-    console.log("Selected value:", value);
-    setSelectedValue(value);
-    switchChain({ chainId: Number(value) });
-  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
@@ -394,7 +448,10 @@ const IncidentReportForm: React.FC = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Source-Chain</SelectLabel>
-                <SelectItem value={_chains[0].chainId.toString()}>
+                <SelectItem
+                  disabled={!isConnected}
+                  value={_chains[0].chainId.toString()}
+                >
                   <div className="flex items-center justify-between gap-3">
                     <Image
                       src="/optimism.png"
@@ -405,7 +462,10 @@ const IncidentReportForm: React.FC = () => {
                     <span className="">Optimism</span>
                   </div>
                 </SelectItem>
-                <SelectItem value={_chains[1].chainId.toString()}>
+                <SelectItem
+                  disabled={!isConnected}
+                  value={_chains[1].chainId.toString()}
+                >
                   <div className="flex items-center justify-between gap-3">
                     <Image
                       src="/arbitrum.png"
@@ -416,7 +476,10 @@ const IncidentReportForm: React.FC = () => {
                     <span className="">Arbitrum</span>
                   </div>
                 </SelectItem>
-                <SelectItem value={_chains[2].chainId.toString()}>
+                <SelectItem
+                  disabled={!isConnected}
+                  value={_chains[2].chainId.toString()}
+                >
                   <div className="flex items-center justify-between gap-3">
                     <Image
                       src="/avalanche.png"
@@ -427,7 +490,10 @@ const IncidentReportForm: React.FC = () => {
                     <span className="">Avalanche Fuji</span>
                   </div>
                 </SelectItem>
-                <SelectItem value={_chains[3].chainId.toString()}>
+                <SelectItem
+                  disabled={!isConnected}
+                  value={_chains[3].chainId.toString()}
+                >
                   <div className="flex items-center justify-between gap-3">
                     <Image
                       src="/PolygonAmoy.png"
@@ -443,16 +509,32 @@ const IncidentReportForm: React.FC = () => {
           </Select>
         </div>
 
-        <button
+      {
+        !tokenURI ? (
+          <button
           disabled={!selectedValue || !cid}
           type="submit"
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
-          Submit Report
+          {!submitButtonText ? " Submit Report" : submitButtonText}
         </button>
+        ):(
+          <button
+          disabled={!selectedValue || !cid}
+          // type="submit"
+          onClick={mint}
+          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Mint NFT
+        </button>
+        )
+      }
       </form>
       {message && <p className="mt-4 text-center text-green-600">{message}</p>}
       <ToastContainer />
+      <button className="bg-black text-white" onClick={mint}>
+        Mint
+      </button>
     </div>
   );
 };
