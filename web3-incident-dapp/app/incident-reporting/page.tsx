@@ -121,7 +121,9 @@ const IncidentReportForm: React.FC = () => {
         // @ts-ignore
         args: [tokenURI, address],
       });
+      toast("Minting NFT");
     } catch (error) {
+      toast("Trasaction failed , try changing rpc network")
       console.error("Error:", error);
     }
   };
@@ -208,32 +210,15 @@ const IncidentReportForm: React.FC = () => {
 
       const result = await response.json();
       console.log("Upload result:", result.ipfsUrl);
+      toast("data uploaded to ipfs");
 
       setUploadStatus(`Upload completed. Your CID is ${result.ipfsCid}`);
       setCid(result.ipfsUrl);
     } catch (error) {
       console.error("Error uploading file:", error);
+      toast("error uploading file");
       setUploadStatus("Upload failed. Please try again.");
     }
-
-
-    try {
-      if (!isConnected) toast("User disconnected");
-
-      const tx = writeContract({
-        abi: ContractAbi,
-        address: ContractAddress,
-        functionName: _function,
-        // @ts-ignore
-        args: [tokenURI, address],
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-
-
-   
 
   };
 
@@ -532,9 +517,7 @@ const IncidentReportForm: React.FC = () => {
       </form>
       {message && <p className="mt-4 text-center text-green-600">{message}</p>}
       <ToastContainer />
-      <button className="bg-black text-white" onClick={mint}>
-        Mint
-      </button>
+     
     </div>
   );
 };
