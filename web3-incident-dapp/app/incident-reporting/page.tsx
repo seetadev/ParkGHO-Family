@@ -13,7 +13,6 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 
 import Image from "next/image";
-import { useMapContext } from "../context/MapContext";
 import {
   useAccount,
   useWriteContract,
@@ -26,7 +25,6 @@ import OptimismAbi from "../../utils/OptimismAbi.json";
 import ArbitrumAbi from "../../utils/ArbitrumAbi.json";
 import PolygonAbi from "../../utils/PolygonAmoy.json";
 import { ToastContainer, toast } from "react-toastify";
-import Map from "@/components/Map";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -47,7 +45,6 @@ const IncidentReportForm: React.FC = () => {
   var _function: any;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { marker, mapCenter } = useMapContext();
   const [selectedValue, setSelectedValue] = useState("");
   const [incidentType, setIncidentType] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -72,7 +69,6 @@ const IncidentReportForm: React.FC = () => {
   const [cid, setCid] = useState<string>("");
   const { address, isConnected, chain } = useAccount();
   const { writeContract } = useWriteContract();
-
 
   const { chains, switchChain } = useSwitchChain();
 
@@ -108,7 +104,7 @@ const IncidentReportForm: React.FC = () => {
     switchChain({ chainId: Number(value) });
     setSelectedValue(value);
   };
-  console.log(address, tokenURI,cid, ContractAbi, ContractAddress , _function);
+  console.log(address, tokenURI, cid, ContractAbi, ContractAddress, _function);
 
   const mint = async () => {
     try {
@@ -123,7 +119,7 @@ const IncidentReportForm: React.FC = () => {
       });
       toast("Minting NFT");
     } catch (error) {
-      toast("Trasaction failed , try changing rpc network")
+      toast("Trasaction failed , try changing rpc network");
       console.error("Error:", error);
     }
   };
@@ -135,9 +131,7 @@ const IncidentReportForm: React.FC = () => {
     formData.append("incidentType", incidentType);
     formData.append("date", date);
     formData.append("time", time);
-    if (marker) {
-      formData.append("location", `${marker.lat}, ${marker.lng}`);
-    }
+
     formData.append("severity", severity);
     formData.append("name", reporterName);
     formData.append("contactInfo", contactInfo);
@@ -151,6 +145,28 @@ const IncidentReportForm: React.FC = () => {
 
     if (cid) {
       formData.append("image", cid);
+    }
+
+    const requiredFields = [
+      "incidentType",
+      "date",
+      "time",
+      "reporterName",
+      "severity",
+      "contactInfo",
+      "vehicleType",
+      "licensePlate",
+      "insuranceInfo",
+      "description",
+      "weather",
+      "roadConditions",
+      "trafficConditions",
+    ];
+
+    for (const field of requiredFields) {
+      if (!eval(field) || eval(field).trim() === "") {
+        toast(`Please fill in the ${field} field.`);
+      }
     }
 
     if (formData) {
@@ -219,13 +235,10 @@ const IncidentReportForm: React.FC = () => {
       toast("error uploading file");
       setUploadStatus("Upload failed. Please try again.");
     }
-
   };
 
-
-
   return (
-    <div className="mx-3 md:mx-0 mb-4 max-w-4xl mx-auto p-3 bg-white rounded-lg shadow-lg mt-8">
+    <div className=" mx-3 md:mx-auto mb-4 max-w-4xl mx-auto p-3 bg-white rounded-lg shadow-lg mt-8 mx-3">
       <h1 className="text-2xl font-bold mb-4">Road Incident Report</h1>
       <form onSubmit={handleSubmit} className="md:grid md:grid-cols-2 gap-4">
         <div className="form-group">
@@ -267,7 +280,7 @@ const IncidentReportForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <div className="form-group block  ">
+        {/* {  <div className="form-group block  ">
           <label className="block text-sm font-medium text-gray-700">
             Enter Your Loaction
           </label>
@@ -295,7 +308,7 @@ const IncidentReportForm: React.FC = () => {
               </DialogFooter>
             </DialogContent>
           </Dialog>
-        </div>
+        </div> *} */}
         <div className="form-group">
           <label className="block text-sm font-medium text-gray-700">
             Severity
@@ -366,6 +379,20 @@ const IncidentReportForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
+
+        <div className="form-group">
+          <label className="block text-sm font-medium text-gray-700">
+            Incident Image
+          </label>
+          <input
+            type="file"
+            ref={fileInputRef}
+            id="fileUpload"
+            onChange={uploadFile}
+            className="mt-1 mb-2 md:mb-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+
         <div className="form-group col-span-2">
           <label className="block text-sm font-medium text-gray-700">
             Description
@@ -409,20 +436,8 @@ const IncidentReportForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <div className="form-group">
-          <label className="block text-sm font-medium text-gray-700">
-            NFT Image
-          </label>
-          <input
-            type="file"
-            ref={fileInputRef}
-            id="fileUpload"
-            onChange={uploadFile}
-            className="mt-1 mb-2 md:mb-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
 
-        <div className="my-4">
+        <div className="mt-7">
           <Select onValueChange={handleSelectChange}>
             <SelectTrigger className="w-full">
               <SelectValue
@@ -494,30 +509,32 @@ const IncidentReportForm: React.FC = () => {
           </Select>
         </div>
 
-      {
-        !tokenURI ? (
+        <div>
+          
+        </div>
+
+
+        {!tokenURI ? (
+            <button
+              disabled={!selectedValue || !cid}
+              type="submit"
+              className="w-full   py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-red-400 disabled:cursor-not-allowed"
+            >
+              {!submitButtonText ? " Submit Report" : submitButtonText}
+            </button>
+        ) : (
           <button
-          disabled={!selectedValue || !cid}
-          type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          {!submitButtonText ? " Submit Report" : submitButtonText}
-        </button>
-        ):(
-          <button
-          disabled={!selectedValue || !cid}
-          // type="submit"
-          onClick={mint}
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          Mint NFT
-        </button>
-        )
-      }
+            disabled={!selectedValue || !cid}
+            // type="submit"
+            onClick={mint}
+            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-red-400 disabled:cursor-not-allowed"
+          >
+            Mint NFT
+          </button>
+        )}
       </form>
       {message && <p className="mt-4 text-center text-green-600">{message}</p>}
       <ToastContainer />
-     
     </div>
   );
 };

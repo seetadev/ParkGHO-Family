@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
     const incidentType = formData.get("incidentType") as string | null;
     const date = formData.get("date") as string | null;
     const time = formData.get("time") as string | null;
-    const location = formData.get("location") as string | null;
     const severity = formData.get("severity") as string | null;
     const name = formData.get("name") as string | null;
     const contactInfo = formData.get("contactInfo") as string | null;
@@ -59,7 +58,6 @@ export async function POST(request: NextRequest) {
       incidentType,
       date,
       time,
-      location,
       severity,
       name,
       contactInfo,
