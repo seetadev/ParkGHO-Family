@@ -437,7 +437,7 @@ const IncidentReportForm: React.FC = () => {
           />
         </div>
 
-        <div className="mt-7">
+        <div className="mt-6 mb-6">
           <Select onValueChange={handleSelectChange}>
             <SelectTrigger className="w-full">
               <SelectValue
