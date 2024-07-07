@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+} 
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  --from: rgba(120,119,198,0.3);
+  --to: hsla(0, 0%, 0%, 0);
+  --size: 300px;
+  background-color: black;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+} 
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+.radialGradient {
+  --from: rgba(120,119,198,0.3);
+  --to: hsla(0, 0%, 0%, 0);
+  --size: 800px;
+  background-color: black;
+  background-image: radial-gradient(circle var(--size) at center, var(--from), var(--to));
+
+}
+
+.gradient-circle-center {
+  background-image: radial-gradient(circle var(--size) at center, var(--from), var(--to));
+}
+
+.gradient-circle-top {
+  background-image: radial-gradient(circle var(--size) at top, var(--from), var(--to));
+}
+
+/* Add more classes for different combinations of type and origin */
+
+.gradient-ellipse-center {
+  background-image: radial-gradient(ellipse var(--size) at center, var(--from), var(--to));
+}
+
+/* Add more classes as needed */
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(0.95);
+  }
+}
+
+.animate {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  font-family: sans-serif;
+  color: #333;
+  background-color: #f3e4d7;
+}
+
+/* height of the container */
+.leaflet-container {
+  height: 90vh;
+  width: 90%;
+  border-radius: 2rem;
+}
+
+.cluster-icon {
+  background-color: #333;
+  height: 2em;
+  width: 2em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px #fff;
+}
