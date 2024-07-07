@@ -171,7 +171,7 @@ const IncidentReportForm: React.FC = () => {
 
     if (formData) {
       try {
-        const response = await fetch("/api/upload", {
+        const response = await fetch("http://localhost:5000/upload-json", {
           method: "POST",
           body: formData,
         });
@@ -215,7 +215,7 @@ const IncidentReportForm: React.FC = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("/api", {
+      const response = await fetch(" http://localhost:5000/upload-image", {
         method: "POST",
         body: formData
       });
