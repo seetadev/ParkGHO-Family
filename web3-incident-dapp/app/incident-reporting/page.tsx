@@ -171,7 +171,7 @@ const IncidentReportForm: React.FC = () => {
 
     if (formData) {
       try {
-        const response = await fetch("https://deci-report.vercel.app/api/upload", {
+        const response = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
@@ -215,9 +215,9 @@ const IncidentReportForm: React.FC = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("https://deci-report.vercel.app/api", {
+      const response = await fetch("/api", {
         method: "POST",
-        body: formData,
+        body: formData
       });
 
       if (!response.ok) {
