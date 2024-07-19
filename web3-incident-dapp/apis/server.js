@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 // CORS Configuration
 app.use(cors({
-  origin: 'https://parkgho-family.onrender.com/' // Allow requests from this origin
+  origin: '*' // Allow requests from this origin
   // You can also use '*' to allow all origins but it's not recommended for production
 }));
 
