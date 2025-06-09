@@ -13,3 +13,24 @@ We are developing CCIP Cross Chain Incident NFT for enabling Incident QR Code + 
 # Incident Summarizer
 
 It has been built using React + Vite, Redux, Tailwind and JS.
+
+# Setup Instructions
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+## Configure Environment Variables
+
+Create a `.env` file in the root directory.
+
+Use the provided `.env.example` as a reference:
+
+```bash
+cp .env.example .env
+```
+
+Fill in the required values such as your API keys.
+
