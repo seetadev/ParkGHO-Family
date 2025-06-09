@@ -200,6 +200,8 @@ By focusing on these next steps, Theta Incident Tools aims to advance its capabi
 ## Install Dependencies
 
 ```bash
+cd webapp
+
 npm install
 ```
 
