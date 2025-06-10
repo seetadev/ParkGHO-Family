@@ -195,4 +195,22 @@ These lessons have deepened our understanding of blockchain, AI, and real-time d
 
 By focusing on these next steps, Theta Incident Tools aims to advance its capabilities, broaden its impact, and continue driving innovation in road incident management and safety.
 
+# Developer Instructions
+
+## Install Dependencies
+
+```bash
+cd webapp
+
+npm install
+```
+
+## Run the Web App
+
+```bash
+npm run dev
+```
+
+The web app will be live at http://localhost:3000
+
 
