@@ -49,18 +49,28 @@ The development server should now be running at `http://localhost:5173`
   * Ensure MetaMask (or any other Ethereum-compatible wallet) is installed in your browser.
   * Your wallet must hold at least `0.000001 ETH` on the **Sepolia testnet**.
 
+## IPFS Storage with Storacha
+
+This project uses **Storacha** as one of the  IPFS storage provider, following the official Lighthouse documentation:
+
+> [Storacha Documentation](https://docs.storacha.network/)
+
+Storacha provides decentralized and permanent file storage powered by **IPFS** and **Filecoin**.
+
 ## IPFS Storage with Lighthouse
 
-This project uses **Lighthouse** as the IPFS storage provider, following the official Lighthouse documentation:
+This project uses **Lighthouse** as one of the IPFS storage provider, following the official Lighthouse documentation:
 
 > [Lighthouse Documentation](https://docs.lighthouse.storage/lighthouse-1)
 
-Lighthouse provides decentralized and permanent file storage powered by IPFS and Filecoin.
+
 
 ### Network Configuration
 
 * **Testnet Used**: `DatilDev`
-* Ensure your wallet has a small amount of testnet ETH on the **Sepolia** network to interact with Lighthouse.
+
+Ensure your wallet has a small amount of testnet ETH on the **Sepolia** network to interact with LIT protocol.
+
 
 
 
