@@ -1,6 +1,6 @@
-# Web3 eKYC with LIT Protocol
+# Invoice encryption with LIT Protocol and Storacha
 
-This project enables Web3-based electronic KYC (eKYC) using the [LIT Protocol](https://developer.litprotocol.com/sdk/access-control/encryption) for secure access control and encryption.
+This project enables invoice encryption and decryption using the [LIT Protocol](https://developer.litprotocol.com/sdk/access-control/encryption) for secure access control and encryption.
 
 ## Official Documentation
 
@@ -20,19 +20,7 @@ npm install
 
 ---
 
-## 2. Set Up Environment Variables
-
-Create a `.env` file in the `webapp` directory by copying the provided `.env.template` file:
-
-```bash
-cp .env.template .env
-```
-
-Then, open `.env` and fill in the required values as per your configuration.
-
----
-
-## 3. Start the Development Server
+## 2. Start the Development Server
 
 ```bash
 npm run dev
@@ -57,13 +45,6 @@ This project uses **Storacha** as one of the  IPFS storage provider, following t
 
 Storacha provides decentralized and permanent file storage powered by **IPFS** and **Filecoin**.
 
-## IPFS Storage with Lighthouse
-
-This project uses **Lighthouse** as one of the IPFS storage provider, following the official Lighthouse documentation:
-
-> [Lighthouse Documentation](https://docs.lighthouse.storage/lighthouse-1)
-
-
 
 ### Network Configuration
 
@@ -73,14 +54,13 @@ Ensure your wallet has a small amount of testnet ETH on the **Sepolia** network 
 
 
 
-
-
-
 ## App Demo
 
 You can view a demo of the application using the link below:
 
-[🔗 App Demo (Google Drive)](https://drive.google.com/drive/folders/1Ll51ZpJU-ttE0eKbE9r2nEIWpCrzuE8X)
+[🔗 App Demo (Google Drive)](https://drive.google.com/file/d/1FWt80I9yE-rem9lLigOMzcVIXQC5qSWx/view?usp=sharing)
+
+Deployment: https://park-gho-family-h4i4.vercel.app/
 
 
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import StorachaUpload from './StorachaUpload';
 import LitProtocolManager from './LitProtocolManager';
 
-function HandleIpfs() {
+function HandleInvoice() {
     const [uploadHash, setUploadHash] = useState('');
     const [fileURI, setFileURI] = useState('');
 
@@ -91,4 +91,4 @@ function HandleIpfs() {
     );
 }
 
-export default HandleIpfs;
+export default HandleInvoice;

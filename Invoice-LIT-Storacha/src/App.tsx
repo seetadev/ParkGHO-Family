@@ -1,5 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import HandleKYC from './components/HandleKYC'; // Make sure the path is correct
+import HandleInvoice from './components/HandleInvoice';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
 
       {/* Main Content */}
       <main style={{ flex: 1, padding: '2rem' }}>
-        <HandleKYC />
+        <HandleInvoice />
       </main>
     </div>
   );
