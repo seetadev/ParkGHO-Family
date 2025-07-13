@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">incident-app-filecoin</string>
+    <string name="title_activity_main">incident-app-filecoin</string>
+    <string name="package_name">com.vasu.filecoinincident</string>
+    <string name="custom_url_scheme">com.vasu.filecoinincident</string>
+</resources>
