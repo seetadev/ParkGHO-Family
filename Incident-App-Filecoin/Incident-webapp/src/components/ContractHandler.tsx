@@ -221,29 +221,35 @@ export default function ContractHandler({ pdfCID }: { pdfCID: string }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 sm:px-6 py-8">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-10">
-                        <div className="flex items-center justify-center mb-4">
-                            <Shield className="w-12 h-12 text-blue-600 mr-3" />
-                            <h1 className="text-4xl font-bold text-gray-800">SecureReport</h1>
+                        <div className="flex flex-col items-center justify-center mb-4">
+                            <Shield className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 mb-2" />
+                            <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
+                                SecureReport
+                            </h1>
                         </div>
-                        <p className="text-gray-600 text-lg">Decentralized Incident Reporting on Filecoin</p>
+                        <p className="text-gray-600 text-sm sm:text-lg">
+                            Decentralized Incident Reporting on Filecoin
+                        </p>
                     </div>
 
                     {/* Wallet Connection Card */}
-                    <div className="bg-white rounded-xl shadow-lg border border-blue-100 mb-8 p-6">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <Wallet className="w-6 h-6 text-blue-600 mr-3" />
-                                <h2 className="text-xl font-semibold text-gray-800">Wallet Connection</h2>
+                    <div className="bg-white rounded-xl shadow-lg border border-blue-100 mb-8 p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row items-center justify-between">
+                            <div className="flex items-center mb-4 sm:mb-0">
+                                <Wallet className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mr-3" />
+                                <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+                                    Wallet Connection
+                                </h2>
                             </div>
                             {!walletAddress ? (
                                 <button
                                     onClick={connectWallet}
                                     disabled={isConnecting}
-                                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2"
+                                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-200 flex items-center space-x-2"
                                 >
                                     {isConnecting ? (
                                         <>
@@ -270,25 +276,25 @@ export default function ContractHandler({ pdfCID }: { pdfCID: string }) {
 
                     {/* Tab Navigation */}
                     <div className="bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
-                        <div className="flex border-b border-gray-200">
+                        <div className="flex flex-col sm:flex-row border-b border-gray-200">
                             <button
                                 onClick={() => setActiveTab('report')}
-                                className={`flex-1 py-4 px-6 text-center font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${activeTab === 'report'
-                                    ? 'bg-blue-600 text-white border-b-2 border-blue-600'
-                                    : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                                className={`flex-1 py-3 sm:py-4 px-4 sm:px-6 text-center font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${activeTab === 'report'
+                                        ? 'bg-blue-600 text-white border-b-2 border-blue-600'
+                                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
-                                <FileText className="w-5 h-5" />
+                                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                                 <span>Report Incident</span>
                             </button>
                             <button
                                 onClick={() => setActiveTab('search')}
-                                className={`flex-1 py-4 px-6 text-center font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${activeTab === 'search'
-                                    ? 'bg-blue-600 text-white border-b-2 border-blue-600'
-                                    : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                                className={`flex-1 py-3 sm:py-4 px-4 sm:px-6 text-center font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${activeTab === 'search'
+                                        ? 'bg-blue-600 text-white border-b-2 border-blue-600'
+                                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                                     }`}
                             >
-                                <Search className="w-5 h-5" />
+                                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                                 <span>Search Incident</span>
                             </button>
                         </div>
@@ -447,6 +453,21 @@ export default function ContractHandler({ pdfCID }: { pdfCID: string }) {
                                     )}
                                 </div>
                             )}
+                        </div>
+                    </div>
+
+                    {/* Icon Grid */}
+                    <div className="p-4 sm:p-6 md:p-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <div className="flex flex-col items-center justify-center text-center">
+                                <Shield className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+                                <p className="text-sm sm:text-base md:text-lg">Shield Icon</p>
+                            </div>
+                            <div className="flex flex-col items-center justify-center text-center">
+                                <Wallet className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+                                <p className="text-sm sm:text-base md:text-lg">Wallet Icon</p>
+                            </div>
+                            {/* Add more icons or elements as needed */}
                         </div>
                     </div>
                 </div>
