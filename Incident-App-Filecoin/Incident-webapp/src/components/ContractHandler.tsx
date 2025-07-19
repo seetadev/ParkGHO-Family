@@ -152,6 +152,7 @@ export default function ContractHandler({ pdfCID }: { pdfCID: string }) {
     useEffect(() => {
         if (reportedIncident) {
             setShowSuccess(true);
+            console.log(showSuccess)
             const timer = setTimeout(() => setShowSuccess(false), 5000);
             return () => clearTimeout(timer);
         }
@@ -197,6 +198,7 @@ export default function ContractHandler({ pdfCID }: { pdfCID: string }) {
 
             setReportedIncident(incidentData);
             setCid('');
+            console.log(cid)
         } catch (error: any) {
             alert("Error reporting incident: " + error.message);
         } finally {
