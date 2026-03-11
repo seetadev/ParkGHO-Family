@@ -1,0 +1,3 @@
+[submodule "ppt-invoicing-suite"]
+	path = ppt-invoicing-suite
+	url = https://github.com/virtualvasu/ppt-invoicing-suite.git

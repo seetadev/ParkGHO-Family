@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ekyc-lit-storacha</string>
+    <string name="title_activity_main">ekyc-lit-storacha</string>
+    <string name="package_name">com.vasu.ekyc</string>
+    <string name="custom_url_scheme">com.vasu.ekyc</string>
+</resources>

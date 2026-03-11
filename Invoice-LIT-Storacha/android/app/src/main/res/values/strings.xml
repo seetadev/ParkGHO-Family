@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">invoice-lit-storacha</string>
+    <string name="title_activity_main">invoice-lit-storacha</string>
+    <string name="package_name">com.vasu.invoice</string>
+    <string name="custom_url_scheme">com.vasu.invoice</string>
+</resources>
