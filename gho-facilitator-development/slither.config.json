@@ -1,4 +1,0 @@
-{
-  "detectors_to_exclude": "naming-convention",
-  "filter_paths": "(node_modules/|lib/|src/test/)"
-}
