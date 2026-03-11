@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="dapp/public/logo.png" alt="SafeRoads DAO Logo" width="90" height="90" />
-</p>
-
 # SafeRoads DAO
 
 ## Table of Contents
