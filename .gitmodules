@@ -1,3 +1,9 @@
 [submodule "ppt-invoicing-suite"]
 	path = ppt-invoicing-suite
 	url = https://github.com/virtualvasu/ppt-invoicing-suite.git
+[submodule "saferoads-filecoin"]
+	path = saferoads-filecoin
+	url = https://github.com/virtualvasu/saferoads-filecoin
+[submodule "saferoads-celo"]
+	path = saferoads-celo
+	url = https://github.com/virtualvasu/self-road-report-celo
