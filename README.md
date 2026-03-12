@@ -5,6 +5,7 @@ Transport DAO is a decentralized application platform that leverages Web3 tools 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Ecosystem Architecture](#ecosystem-architecture)
 - [Technology Stack](#technology-stack)
 - [Platform Components](#platform-components)
   - [1. Solana Integration - Park Pro Token](#1-solana-integration---park-pro-token)
@@ -24,6 +25,72 @@ Transport DAO is a decentralized application platform that leverages Web3 tools 
 ## Overview
 
 Transport DAO combines cutting-edge Web3 technologies with AI to create a comprehensive transportation and logistics management ecosystem. Our platform integrates multiple blockchain networks, AI agents, and decentralized storage solutions to provide secure, transparent, and automated transportation services.
+
+## Ecosystem Architecture
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'background': '#1a1a2e', 'primaryColor': '#1a1a2e', 'primaryTextColor': '#ffffff', 'primaryBorderColor': 'transparent', 'lineColor': '#8888aa', 'secondaryColor': 'transparent', 'tertiaryColor': 'transparent', 'mainBkg': '#1a1a2e', 'clusterBkg': 'transparent', 'clusterBorder': 'transparent'}}}%%
+flowchart TB
+    %% Users
+    Citizens["Citizens"]:::userNode
+    Providers["Service Providers"]:::userNode
+    Authorities["Authorities"]:::userNode
+
+    %% Core Applications
+    SafeRoads["SafeRoads<br/>Road Incident Reporting"]:::highlight
+    ParkPro["Park Pro Token<br/>DeFi & Incentives"]:::appNode
+    Warehouse["Warehouse System<br/>NFT Service Tickets"]:::appNode
+    Incidents["Incident Analytics<br/>Detection & Summarization"]:::appNode
+
+    %% AI Services
+    Galadriel["Galadriel"]:::aiNode
+    Coophive["Coophive/Lilypad"]:::aiNode
+    Giza["ICP/Giza"]:::aiNode
+
+    %% Blockchains
+    Celo["Celo"]:::chainNode
+    Filecoin["Filecoin"]:::chainNode
+    Solana["Solana"]:::chainNode
+    Starknet["Starknet"]:::chainNode
+    ICP["ICP"]:::chainNode
+
+    %% Governance
+    Registry["EtherCalc<br/>Provider Registry"]:::govNode
+    DAO["DAO Voting"]:::govNode
+    Rewards["Token Rewards"]:::govNode
+
+    %% User connections
+    Citizens --> SafeRoads
+    Citizens --> ParkPro
+    Providers --> Registry
+    Authorities --> DAO
+
+    %% App to AI
+    SafeRoads --> Galadriel
+    Warehouse --> Coophive
+    Incidents --> Giza
+
+    %% App to Blockchain
+    SafeRoads --> Celo
+    SafeRoads --> Filecoin
+    ParkPro --> Solana
+    Warehouse --> Filecoin
+    Incidents --> Starknet
+    Incidents --> ICP
+
+    %% Governance flow
+    Registry --> DAO
+    DAO --> Rewards
+    Rewards -.->|Incentives| Citizens
+
+    %% Node Styles
+    classDef highlight fill:#e94560,stroke:#ff6b6b,stroke-width:3px,color:#ffffff
+    classDef userNode fill:#4a4a6a,stroke:#6a6a8a,color:#ffffff
+    classDef appNode fill:#2d4059,stroke:#4a6fa5,color:#ffffff
+    classDef aiNode fill:#0f3460,stroke:#1a5276,color:#ffffff
+    classDef chainNode fill:#1e5128,stroke:#4e9f3d,color:#ffffff
+    classDef govNode fill:#5c3d2e,stroke:#b85c38,color:#ffffff
+```
 
 ## Technology Stack
 
