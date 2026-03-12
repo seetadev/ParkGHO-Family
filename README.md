@@ -13,6 +13,7 @@ Transport DAO is a decentralized application platform that leverages Web3 tools 
   - [4. Coophive & Lilypad - Trusted AI Development](#4-coophive--lilypad---trusted-ai-development)
   - [5. Internet Computer Protocol (ICP) - Decentralized AI](#5-internet-computer-protocol-icp---decentralized-ai)
   - [6. Starknet & Nethermind - zkEVM Solutions](#6-starknet--nethermind---zkevm-solutions)
+  - [7. SafeRoads - Civic Reporting & Road Safety](#7-saferoads---civic-reporting--road-safety)
 - [Service Provider Network](#service-provider-network)
 - [Demos & Live Applications](#demos--live-applications)
 - [Architecture & Workflow](#architecture--workflow)
@@ -187,6 +188,38 @@ We are developing a Starknet based dapp solution, which offers an Artificial Int
   - Demo- mobile device_ios_screen capture.mov
   - AI-Object-Detection-Logistics-Starknet-Screencast-Demo.mov
 
+### 7. SafeRoads - Civic Reporting & Road Safety
+
+**Multi-Chain Road Incident Management Platform**
+
+SafeRoads is a comprehensive road safety and incident management module that incentivizes citizens to report road incidents while ensuring transparency and accountability through blockchain technology.
+
+#### Key Features:
+- **Token Rewards** - Citizens earn cryptocurrency rewards (CELO/FIL) for verified incident reports
+- **Incidents Dashboard** - Real-time verification portal for authorities to review and approve reports  
+- **Aadhaar-enabled ZK Verification** - Zero-knowledge identity verification using Self Protocol (Celo)
+- **Multi-Platform Access** - Web dApp, Telegram Mini App, and mobile-friendly interfaces
+- **Decentralized Storage** - IPFS integration for permanent, tamper-proof evidence storage
+- **AI-Powered Verification** - Noah AI integration for streamlined authority workflows
+
+#### Multi-Chain Implementations:
+
+**SafeRoads Celo:**
+- **Live App**: [self-road-report-celo.vercel.app](https://self-road-report-celo.vercel.app/)
+- **Features**: Aadhaar-based identity verification with Self Protocol, Telegram Mini App integration
+- **Smart Contracts**: ProofOfHuman Contract, IncidentContract on Celo Sepolia
+
+**SafeRoads Filecoin:**
+- **Live App**: [saferoads-filecoin.vercel.app](https://saferoads-filecoin.vercel.app/)
+- **Features**: Enhanced decentralized storage with Storacha, professional PDF generation with IPFS
+- **Smart Contracts**: IncidentManager contract on Filecoin Calibration testnet
+
+#### Resources:
+- **Celo Implementation**: [saferoads-celo/](saferoads-celo/)
+- **Filecoin Implementation**: [saferoads-filecoin/](saferoads-filecoin/)
+- **Telegram Bot**: [@saferoads_dao_bot](https://t.me/saferoads_dao_bot)
+- **Demo Videos**: [Google Drive](https://drive.google.com/drive/folders/1dCfET3D1Tt42aQ7yfovlCXsd5ued5IUk?usp=drive_link)
+
 ---
 
 ## Service Provider Network
@@ -209,11 +242,14 @@ This registry is integrated across:
 
 ### Active Deployments
 - **Solana Lottery dApp**: [solana-lottery-dapp-rouge.vercel.app](https://solana-lottery-dapp-rouge.vercel.app/)
+- **SafeRoads Celo**: [self-road-report-celo.vercel.app](https://self-road-report-celo.vercel.app/)
+- **SafeRoads Filecoin**: [saferoads-filecoin.vercel.app](https://saferoads-filecoin.vercel.app/)
 - **Starknet Incident Reporter**: [web3-road-incident.vercel.app](https://web3-road-incident.vercel.app/)
 - **ICP Incident Canister**: [24ten-naaaa-aaaag-ald6q-cai.icp0.io](https://24ten-naaaa-aaaag-ald6q-cai.icp0.io/)
 
 ### Demo Collections
 - **Solana Integration**: [Google Drive](https://drive.google.com/drive/u/1/folders/1twBmTFMY4N-ccA_n44dhWI5XfiE7igFU)
+- **SafeRoads**: [Google Drive](https://drive.google.com/drive/folders/1dCfET3D1Tt42aQ7yfovlCXsd5ued5IUk?usp=drive_link)
 - **Filecoin FVM**: [Google Drive](https://drive.google.com/drive/u/1/folders/1NFSDYcx8rxheCX5SmVCHCyRNFhhhF03I)
 - **Galadriel AI**: [Google Drive](https://drive.google.com/drive/u/1/folders/1X3lQ12CRuyswVenF53UZakYcl86UbxQk)
 - **ICP Solutions**: [Google Drive](https://drive.google.com/drive/u/1/folders/1Wi1SwqzG7P5CEpXSdr-5Zu6JwrBUUepV)
