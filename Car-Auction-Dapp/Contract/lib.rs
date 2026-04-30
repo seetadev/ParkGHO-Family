@@ -66,8 +66,8 @@ mod lottery {
         ticket.lottery_id = lottery_id;
         ticket.authority = buyer.key();
 
-        msg!("tikcet id {}", ticket.id);
-        msg!("tikcet authority {}", ticket.authority);
+        msg!("ticket id {}", ticket.id);
+        msg!("ticket authority {}", ticket.authority);
 
         Ok(())
     }
@@ -81,7 +81,7 @@ mod lottery {
             return err!(LotteryError::WinnerAlreadyExists);
         }
 
-        if (lottery.last_ticket_id == 0) {
+        if lottery.last_ticket_id == 0 {
             return err!(LotteryError::NoTickets);
         }
 
@@ -106,7 +106,7 @@ mod lottery {
         let winner = &_ctx.accounts.authority;
 
         if lottery.claimed {
-            return err!(LotteryError::WinnerAlreadyExists);
+            return err!(LotteryError::AlreadyClaimed);
         }
 
         match lottery.winner_id {
@@ -116,7 +116,7 @@ mod lottery {
                 }
             }
             None => {
-                return err!(LotteryError::WinnerAlreadyExists);
+                return err!(LotteryError::WinnerNotChoosen);
             }
         }
 
