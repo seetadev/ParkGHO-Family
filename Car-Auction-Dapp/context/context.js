@@ -61,8 +61,11 @@ export const AppProvider = ({ children }) => {
         masterAddress ?? (await getMasterAddress())
       );
       setIntialized(true)
-      setLotteryId(master.lastId);
-      const lotteryAddress = await getLotteryAddress(master.lastId);
+      // Use master.lastId directly — setLotteryId is asynchronous so the
+      // lotteryId state variable is still stale at this point in the function.
+      const currentLotteryId = master.lastId;
+      setLotteryId(currentLotteryId);
+      const lotteryAddress = await getLotteryAddress(currentLotteryId);
       setLotteryAddress(lotteryAddress);
       const lottery = await program.account.lottery.fetch(lotteryAddress);
       setLottery(lottery);
@@ -72,7 +75,7 @@ export const AppProvider = ({ children }) => {
       const userTickets = await program.account.ticket.all([
         {
           memcmp: {
-            bytes: bs58.encode(new BN(lotteryId).toArrayLike(Buffer, "le", 4)),
+            bytes: bs58.encode(new BN(currentLotteryId).toArrayLike(Buffer, "le", 4)),
             offset: 12,
           },
         },
@@ -108,8 +111,10 @@ export const AppProvider = ({ children }) => {
 
     const history = [];
 
-    for (const i in new Array(lotteryId).fill(null)) {
-      const id = lotteryId - parseInt(i);
+    // Use a standard for loop — for...in on an array yields string indices
+    // ("0", "1", ...) which requires parseInt and is an anti-pattern.
+    for (let i = 0; i < lotteryId; i++) {
+      const id = lotteryId - i;
       if (!id) break;
 
       const lotteryAddress = await getLotteryAddress(id);
@@ -182,7 +187,6 @@ export const AppProvider = ({ children }) => {
   const buyTicket = async () => {
     setError("");
     setSuccess("");
-
 
     try {
       console.log("BUYING")
