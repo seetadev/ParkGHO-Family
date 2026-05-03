@@ -6,11 +6,6 @@ import { PublicKey } from '@solana/web3.js';
 const Table = () => {
 
   const {lotteryHistory} = useAppContext();
-  // const lotteryHistory = [
-  //   { lotteryId: 0, winnerId: 2, winnerAddress: new PublicKey("11111111111111111111111111111111"), prize: '15' },
-  //   { lotteryId: 1, winnerId: 5, winnerAddress: new PublicKey("11111111111111111111111111111111"), prize: '40' },
-  //   { lotteryId: 2, winnerId: 99, winnerAddress: new PublicKey("11111111111111111111111111111111"), prize: '99' },
-  // ]
   return (
     <div className={style.wrapper}>
       <div className={style.tableHeader}>
@@ -20,8 +15,11 @@ const Table = () => {
         <div className={style.amountTitle}>💲 Amount</div>
       </div>
       <div className={style.rows}>
-        {lotteryHistory?.map((h, i) => (
-          <TableRow key={i} {...h} />
+        {lotteryHistory?.map((h) => (
+          // Use the stable lotteryId as the key so React can reconcile rows
+          // correctly across re-renders. Using the array index would cause
+          // incorrect diffing whenever history entries are prepended or removed.
+          <TableRow key={h.lotteryId} {...h} />
         ))}
       </div>
     </div>
