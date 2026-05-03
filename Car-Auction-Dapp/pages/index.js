@@ -13,8 +13,12 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 export default function Home() {
+  // Read the RPC endpoint from an environment variable so the QuikNode API
+  // key is not committed to source control.  Set NEXT_PUBLIC_RPC_ENDPOINT in
+  // your .env.local file (never commit that file).
   const endpoint =
-    "https://tiniest-damp-frost.solana-devnet.quiknode.pro/cbe8504b7a4486e60330aeaa06cc64315ddf324f/";
+    process.env.NEXT_PUBLIC_RPC_ENDPOINT ||
+    "https://api.devnet.solana.com";
 
   const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
   return (
