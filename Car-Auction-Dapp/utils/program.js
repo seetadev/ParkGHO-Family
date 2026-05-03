@@ -18,31 +18,31 @@ export const getProgram = (connection, wallet) => {
   return program;
 };
 
-export const getMasterAddress = async () => {
-  return (
-    await PublicKey.findProgramAddress([Buffer.from(MASTER_SEED)], PROGRAM_ID)
+// PublicKey.findProgramAddress is deprecated in favour of the synchronous
+// findProgramAddressSync which avoids unnecessary Promise overhead and is the
+// recommended API in @solana/web3.js >= 1.68.
+export const getMasterAddress = () => {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from(MASTER_SEED)],
+    PROGRAM_ID
   )[0];
 };
 
-export const getLotteryAddress = async (id) => {
-  return (
-    await PublicKey.findProgramAddress(
-      [Buffer.from(LOTTERY_SEED), new BN(id).toArrayLike(Buffer, "le", 4)],
-      PROGRAM_ID
-    )
+export const getLotteryAddress = (id) => {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from(LOTTERY_SEED), new BN(id).toArrayLike(Buffer, "le", 4)],
+    PROGRAM_ID
   )[0];
 };
 
-export const getTicketAddress = async (lotteryPk, id) => {
-  return (
-    await PublicKey.findProgramAddress(
-      [
-        Buffer.from(TICKET_SEED),
-        lotteryPk.toBuffer(),
-        new BN(id).toArrayLike(Buffer, "le", 4),
-      ],
-      PROGRAM_ID
-    )
+export const getTicketAddress = (lotteryPk, id) => {
+  return PublicKey.findProgramAddressSync(
+    [
+      Buffer.from(TICKET_SEED),
+      lotteryPk.toBuffer(),
+      new BN(id).toArrayLike(Buffer, "le", 4),
+    ],
+    PROGRAM_ID
   )[0];
 };
 
