@@ -112,8 +112,8 @@ const Demo = () => {
           You can paste a URL or type/paste incident text directly for analysis.
         </div>
 
-        <div className='flex flex-col gap-1 max-h-60 overflow-y-auto'>
-          {[...allIncidents].reverse().map((item, index) => (
+        <div className='flex flex-col gap-1 max-h-52 overflow-y-auto'>
+          {allIncidents.map((item, index) => (
             <div
               key={`incident-${index}`}
               onClick={() => setIncident(item)}

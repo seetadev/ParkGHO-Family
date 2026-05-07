@@ -1,5 +1,5 @@
 export const DEFAULT_CATEGORY = "General Incident";
-export const DEFAULT_SEVERITY = "Medium";
+export const DEFAULT_SEVERITY = "Low";
 export const DEFAULT_ACTION = "Review the incident report and follow up with the relevant team.";
 
 const categoryRules = [
@@ -14,8 +14,8 @@ const categoryRules = [
 const severityRules = [
   { severity: "Critical", regex: /death|fatal|killed|severe injury|multiple injuries|explosion|fire|hospitalized/ },
   { severity: "High", regex: /collision|crash|accident|injury|hurt|wounded|highway|major incident/ },
-  { severity: "Medium", regex: /pothole|damaged road|congestion|traffic jam|gridlock|blocked lane|road damage/ },
-  { severity: "Low", regex: /signal issue|traffic signal|parking violation|illegal parking|double parked|minor incident/ },
+  { severity: "Medium", regex: /pothole|damaged road|congestion|traffic jam|gridlock|blocked lane|road damage|signal issue|traffic signal|street light|streetlight|light (?:is )?out|broken signal/ },
+  { severity: "Low", regex: /parking violation|illegal parking|double parked|minor incident/ },
 ];
 
 const suggestedActionMap = {

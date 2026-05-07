@@ -38,10 +38,18 @@ const cases = [
     },
   },
   {
+    input: "hello world",
+    expected: {
+      categories: ["General Incident"],
+      severity: "Low",
+      suggestedAction: "Review the incident report and follow up with the relevant team.",
+    },
+  },
+  {
     input: "The shop was broken into and the storefront was vandalized",
     expected: {
       categories: ["General Incident"],
-      severity: "Medium",
+      severity: "Low",
       suggestedAction: "Review the incident report and follow up with the relevant team.",
     },
   },
