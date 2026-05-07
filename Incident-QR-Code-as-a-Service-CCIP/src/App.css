@@ -114,3 +114,31 @@
 .summary_box {
   @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-4;
 }
+
+.analysis_card {
+  @apply rounded-xl border border-gray-200 bg-white/20 p-4 shadow-sm;
+}
+
+.category_tag {
+  @apply inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700;
+}
+
+.severity_badge {
+  @apply inline-flex rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+.severity_low {
+  @apply bg-sky-100 text-sky-800;
+}
+
+.severity_medium {
+  @apply bg-amber-100 text-amber-800;
+}
+
+.severity_high {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.severity_critical {
+  @apply bg-red-100 text-red-800;
+}

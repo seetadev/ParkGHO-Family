@@ -1,67 +1,85 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 
 import { copy, linkIcon, loader, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
+import {
+  analyzeIncidentText,
+  getLocalSummary,
+  isValidUrl,
+} from "../services/incidentAnalyzer";
 
 const Demo = () => {
-  const [article, setArticle] = useState({
-    url: "",
+  const [incident, setIncident] = useState({
+    input: "",
     summary: "",
+    categories: [],
+    severity: "",
+    suggestedAction: "",
   });
-  const [allArticles, setAllArticles] = useState([]);
+  const [allIncidents, setAllIncidents] = useState([]);
   const [copied, setCopied] = useState("");
 
-  // RTK lazy query
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
-  // Load data from localStorage on mount
   useEffect(() => {
-    const articlesFromLocalStorage = JSON.parse(
-      localStorage.getItem("articles")
-    );
-
-    if (articlesFromLocalStorage) {
-      setAllArticles(articlesFromLocalStorage);
+    const storedIncidents = JSON.parse(localStorage.getItem("incidents"));
+    if (storedIncidents) {
+      setAllIncidents(storedIncidents);
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const existingArticle = allArticles.find(
-      (item) => item.url === article.url
+    const existingIncident = allIncidents.find(
+      (item) => item.input === incident.input
     );
 
-    if (existingArticle) return setArticle(existingArticle);
-
-    const { data } = await getSummary({ articleUrl: article.url });
-    if (data?.summary) {
-      const newArticle = { ...article, summary: data.summary };
-      const updatedAllArticles = [newArticle, ...allArticles];
-
-      // update state and local storage
-      setArticle(newArticle);
-      setAllArticles(updatedAllArticles);
-      localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
+    if (existingIncident) {
+      setIncident(existingIncident);
+      return;
     }
+
+    const isUrl = isValidUrl(incident.input);
+    let summary = "";
+    let analysis = analyzeIncidentText(incident.input);
+
+    if (isUrl) {
+      const { data } = await getSummary({ articleUrl: incident.input });
+      summary = data?.summary || "Unable to summarize the provided URL.";
+      analysis = analyzeIncidentText(summary || incident.input);
+    } else {
+      summary = getLocalSummary(incident.input);
+    }
+
+    const newIncident = {
+      ...incident,
+      summary,
+      categories: analysis.categories,
+      severity: analysis.severity,
+      suggestedAction: analysis.suggestedAction,
+    };
+
+    const updatedAllIncidents = [newIncident, ...allIncidents];
+    setIncident(newIncident);
+    setAllIncidents(updatedAllIncidents);
+    localStorage.setItem("incidents", JSON.stringify(updatedAllIncidents));
   };
 
-  // copy the url and toggle the icon for user feedback
-  const handleCopy = (copyUrl) => {
-    setCopied(copyUrl);
-    navigator.clipboard.writeText(copyUrl);
+  const handleCopy = (copyInput) => {
+    setCopied(copyInput);
+    navigator.clipboard.writeText(copyInput);
     setTimeout(() => setCopied(false), 3000);
   };
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    if (e.key === "Enter") {
       handleSubmit(e);
     }
   };
 
   return (
     <section className='mt-16 w-full max-w-xl'>
-      {/* Search */}
       <div className='flex flex-col w-full gap-2'>
         <form
           className='relative flex justify-center items-center'
@@ -74,13 +92,13 @@ const Demo = () => {
           />
 
           <input
-            type='url'
-            placeholder='https://en.wikipedia.org/wiki/Traffic_collision'
-            value={article.url}
-            onChange={(e) => setArticle({ ...article, url: e.target.value })}
+            type='text'
+            placeholder='Enter an incident description or a URL to summarize'
+            value={incident.input}
+            onChange={(e) => setIncident({ ...incident, input: e.target.value })}
             onKeyDown={handleKeyDown}
             required
-            className='url_input peer' // When you need to style an element based on the state of a sibling element, mark the sibling with the peer class, and use peer-* modifiers to style the target element
+            className='url_input peer'
           />
           <button
             type='submit'
@@ -90,51 +108,78 @@ const Demo = () => {
           </button>
         </form>
 
-        {/* Browse History */}
+        <div className='text-xs text-gray-500'>
+          You can paste a URL or type/paste incident text directly for analysis.
+        </div>
+
         <div className='flex flex-col gap-1 max-h-60 overflow-y-auto'>
-          {allArticles.reverse().map((item, index) => (
+          {[...allIncidents].reverse().map((item, index) => (
             <div
-              key={`link-${index}`}
-              onClick={() => setArticle(item)}
+              key={`incident-${index}`}
+              onClick={() => setIncident(item)}
               className='link_card'
             >
-              <div className='copy_btn' onClick={() => handleCopy(item.url)}>
+              <div className='copy_btn' onClick={() => handleCopy(item.input)}>
                 <img
-                  src={copied === item.url ? tick : copy}
-                  alt={copied === item.url ? "tick_icon" : "copy_icon"}
+                  src={copied === item.input ? tick : copy}
+                  alt={copied === item.input ? "tick_icon" : "copy_icon"}
                   className='w-[40%] h-[40%] object-contain'
                 />
               </div>
               <p className='flex-1 font-satoshi text-blue-700 font-medium text-sm truncate'>
-                {item.url}
+                {item.input}
               </p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Display Result */}
       <div className='my-10 max-w-full flex justify-center items-center'>
         {isFetching ? (
           <img src={loader} alt='loader' className='w-20 h-20 object-contain' />
         ) : error ? (
           <p className='font-inter font-bold text-black text-center'>
-            Sorry for the result. Please try again.
+            Something went wrong. Please try again.
             <br />
             <span className='font-satoshi font-normal text-gray-700'>
               {error?.data?.error}
             </span>
           </p>
         ) : (
-          article.summary && (
-            <div className='flex flex-col gap-3'>
-              <h2 className='font-satoshi font-bold text-gray-600 text-xl'>
-                Article <span className='blue_gradient'>Summary</span>
-              </h2>
-              <div className='summary_box'>
-                <p className='font-inter font-medium text-sm text-gray-700'>
-                  {article.summary}
-                </p>
+          incident.summary && (
+            <div className='flex flex-col gap-4'>
+              <div>
+                <h2 className='font-satoshi font-bold text-gray-600 text-xl'>
+                  Incident <span className='blue_gradient'>Analysis</span>
+                </h2>
+                <div className='summary_box'>
+                  <p className='font-inter font-medium text-sm text-gray-700'>
+                    {incident.summary}
+                  </p>
+                </div>
+              </div>
+
+              <div className='grid gap-3 md:grid-cols-3'>
+                <div className='analysis_card'>
+                  <h3 className='font-satoshi font-semibold text-gray-700'>Categories</h3>
+                  <div className='mt-2 flex flex-wrap gap-2'>
+                    {incident.categories.map((category) => (
+                      <span key={category} className='category_tag'>
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className='analysis_card'>
+                  <h3 className='font-satoshi font-semibold text-gray-700'>Severity</h3>
+                  <span className={`severity_badge severity_${incident.severity.toLowerCase()}`}>
+                    {incident.severity}
+                  </span>
+                </div>
+                <div className='analysis_card md:col-span-3'>
+                  <h3 className='font-satoshi font-semibold text-gray-700'>Suggested Action</h3>
+                  <p className='font-inter text-sm text-gray-600'>{incident.suggestedAction}</p>
+                </div>
               </div>
             </div>
           )
