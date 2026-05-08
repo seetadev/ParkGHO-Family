@@ -186,11 +186,18 @@ const IncidentDashboard = () => {
             {analytics.recentIncidents.map((incident, index) => (
               <div key={index} className="incident-item">
                 <div className="incident-header">
-                  <div className="incident-text">{incident.text.substring(0, 60)}...</div>
+                  <div className="incident-text">
+                    {incident.title ? `${incident.title} · ` : ''}{incident.text?.substring(0, 60)}...
+                  </div>
                   <span className={`severity-badge severity-${incident.severity?.toLowerCase()}`}>
                     {incident.severity}
                   </span>
                 </div>
+                {incident.location && (
+                  <div className="incident-location text-sm text-slate-600 mb-2">
+                    Location: {incident.location}
+                  </div>
+                )}
                 <div className="incident-meta">
                   <div className="categories">
                     {incident.categories && incident.categories.map((cat, idx) => (
@@ -201,6 +208,11 @@ const IncidentDashboard = () => {
                     {new Date(incident.timestamp).toLocaleDateString()} {new Date(incident.timestamp).toLocaleTimeString()}
                   </div>
                 </div>
+                {incident.evidenceCID && (
+                  <div className="evidence-link mt-3 text-sm text-blue-700">
+                    Evidence CID: <a href={`https://w3s.link/ipfs/${incident.evidenceCID}`} target="_blank" rel="noreferrer">{incident.evidenceCID}</a>
+                  </div>
+                )}
               </div>
             ))}
           </div>
