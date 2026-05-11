@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .env
+
+# Hardhat build output
+artifacts/
+cache/
+typechain-types/
