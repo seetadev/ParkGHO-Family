@@ -1,36 +1,36 @@
-const WEB3_STORAGE_TOKEN = import.meta.env.VITE_WEB3_STORAGE_TOKEN;
+const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY;
+const PINATA_API_SECRET = import.meta.env.VITE_PINATA_API_SECRET;
+const PINATA_BASE_URL = 'https://api.pinata.cloud';
 
-const getWeb3StorageHeaders = () => {
-  if (!WEB3_STORAGE_TOKEN) {
-    throw new Error('Missing VITE_WEB3_STORAGE_TOKEN. Set it in your .env to enable IPFS upload.');
+const getPinataHeaders = () => {
+  if (!PINATA_API_KEY || !PINATA_API_SECRET) {
+    throw new Error('Missing VITE_PINATA_API_KEY or VITE_PINATA_API_SECRET in your .env file.');
   }
-
   return {
-    Authorization: `Bearer ${WEB3_STORAGE_TOKEN}`,
+    pinata_api_key: PINATA_API_KEY,
+    pinata_secret_api_key: PINATA_API_SECRET,
   };
 };
 
 export const uploadFileToWeb3Storage = async (file) => {
-  if (!file) {
-    throw new Error('No file provided for IPFS upload.');
-  }
+  if (!file) throw new Error('No file provided for IPFS upload.');
 
   const formData = new FormData();
   formData.append('file', file, file.name);
 
-  const response = await fetch('https://api.web3.storage/upload', {
+  const response = await fetch(`${PINATA_BASE_URL}/pinning/pinFileToIPFS`, {
     method: 'POST',
-    headers: getWeb3StorageHeaders(),
+    headers: getPinataHeaders(),
     body: formData,
   });
 
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data?.message || 'Upload failed. Check your Web3.Storage token and network.');
+    throw new Error(data?.error?.details || 'Pinata upload failed. Check your API keys.');
   }
 
-  return data.cid;
+  return data.IpfsHash;
 };
 
 export const uploadJSONToWeb3Storage = async (json, filename = 'metadata.json') => {
@@ -40,5 +40,5 @@ export const uploadJSONToWeb3Storage = async (json, filename = 'metadata.json') 
 };
 
 export const buildWeb3StorageUrl = (cid, path = '') => {
-  return `https://w3s.link/ipfs/${cid}${path ? `/${path}` : ''}`;
+  return `https://gateway.pinata.cloud/ipfs/${cid}${path ? `/${path}` : ''}`;
 };
