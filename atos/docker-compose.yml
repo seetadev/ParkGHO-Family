@@ -1,0 +1,116 @@
+version: "3.9"
+
+networks:
+  atos-net:
+    driver: bridge
+
+services:
+  hardhat-node:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.hardhat
+    ports:
+      - "8545:8545"
+    networks:
+      - atos-net
+
+  deployer:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    environment:
+      AGENT_ROLE: deployer
+      AGENT_PORT: "9001"
+      DEPLOY_NETWORK: localhost
+    env_file:
+      - .env
+    ports:
+      - "9001:9001"
+    networks:
+      - atos-net
+    depends_on:
+      - hardhat-node
+    command: ["npx", "ts-node", "agents/deployer/index.ts"]
+    volumes:
+      - ./deployments:/app/deployments
+      - ./logs/deployer:/app/logs
+
+  monitor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    environment:
+      AGENT_ROLE: monitor
+      AGENT_PORT: "9003"
+      BOOTSTRAP_PEERS: /dns4/deployer/tcp/9001
+    env_file:
+      - .env
+    ports:
+      - "9003:9003"
+    networks:
+      - atos-net
+    depends_on:
+      - deployer
+    command: ["npx", "ts-node", "agents/monitor/index.ts"]
+    volumes:
+      - ./logs/monitor:/app/logs
+
+  liquidity:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    environment:
+      AGENT_ROLE: liquidity_manager
+      AGENT_PORT: "9002"
+      BOOTSTRAP_PEERS: /dns4/deployer/tcp/9001
+    env_file:
+      - .env
+    ports:
+      - "9002:9002"
+    networks:
+      - atos-net
+    depends_on:
+      - deployer
+    command: ["npx", "ts-node", "agents/liquidity/index.ts"]
+    volumes:
+      - ./logs/liquidity:/app/logs
+
+  governance:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    environment:
+      AGENT_ROLE: governance
+      AGENT_PORT: "9004"
+      BOOTSTRAP_PEERS: /dns4/deployer/tcp/9001
+    env_file:
+      - .env
+    ports:
+      - "9004:9004"
+    networks:
+      - atos-net
+    depends_on:
+      - deployer
+    command: ["npx", "ts-node", "agents/governance/index.ts"]
+    volumes:
+      - ./logs/governance:/app/logs
+
+  analytics:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    environment:
+      AGENT_ROLE: analytics
+      AGENT_PORT: "9005"
+      BOOTSTRAP_PEERS: /dns4/deployer/tcp/9001
+    env_file:
+      - .env
+    ports:
+      - "9005:9005"
+    networks:
+      - atos-net
+    depends_on:
+      - deployer
+    command: ["npx", "ts-node", "agents/analytics/index.ts"]
+    volumes:
+      - ./logs/analytics:/app/logs
