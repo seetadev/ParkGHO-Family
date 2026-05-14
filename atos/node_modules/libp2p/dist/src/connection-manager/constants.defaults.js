@@ -1,0 +1,61 @@
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#dialTimeout
+ */
+export const DIAL_TIMEOUT = 10_000;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#addressDialTimeout
+ */
+export const ADDRESS_DIAL_TIMEOUT = 6_000;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#connectionCloseTimeout
+ */
+export const CONNECTION_CLOSE_TIMEOUT = 1_000;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#inboundUpgradeTimeout
+ */
+export const INBOUND_UPGRADE_TIMEOUT = 10_000;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#inboundStreamProtocolNegotiationTimeout
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#outboundStreamProtocolNegotiationTimeout
+ */
+export const PROTOCOL_NEGOTIATION_TIMEOUT = 10_000;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#maxPeerAddrsToDial
+ */
+export const MAX_PEER_ADDRS_TO_DIAL = 25;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#inboundConnectionThreshold
+ */
+export const INBOUND_CONNECTION_THRESHOLD = 5;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#maxIncomingPendingConnections
+ */
+export const MAX_INCOMING_PENDING_CONNECTIONS = 10;
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#maxParallelReconnects
+ */
+export const MAX_PARALLEL_RECONNECTS = 5;
+/**
+ * Store as part of the peer store metadata for a given peer, the value for this
+ * key is a timestamp of the last time a dial attempt failed with the timestamp
+ * stored as a string.
+ *
+ * Used to insure we do not endlessly try to auto dial peers we have recently
+ * failed to dial.
+ */
+export const LAST_DIAL_FAILURE_KEY = 'last-dial-failure';
+/**
+ * Store as part of the peer store metadata for a given peer, the value for this
+ * key is a timestamp of the last time a dial attempt succeeded with the
+ * timestamp stored as a string.
+ */
+export const LAST_DIAL_SUCCESS_KEY = 'last-dial-success';
+/**
+ * @see https://libp2p.github.io/js-libp2p/interfaces/libp2p.index.ConnectionManagerInit.html#maxDialQueueLength
+ */
+export const MAX_DIAL_QUEUE_LENGTH = 500;
+/**
+ * @see https://github.com/libp2p/js-libp2p/blob/main/packages/libp2p/src/connection-manager/resolvers/index.ts
+ */
+export const MAX_RECURSIVE_DEPTH = 32;
+//# sourceMappingURL=constants.defaults.js.map

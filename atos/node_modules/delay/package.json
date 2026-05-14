@@ -1,0 +1,61 @@
+{
+	"name": "delay",
+	"version": "7.0.0",
+	"description": "Delay a promise a specified amount of time",
+	"license": "MIT",
+	"repository": "sindresorhus/delay",
+	"funding": "https://github.com/sponsors/sindresorhus",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "https://sindresorhus.com"
+	},
+	"type": "module",
+	"exports": {
+		"types": "./index.d.ts",
+		"default": "./index.js"
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"test": "xo && node --test && tsd"
+	},
+	"files": [
+		"index.js",
+		"index.d.ts"
+	],
+	"keywords": [
+		"promise",
+		"resolve",
+		"delay",
+		"defer",
+		"wait",
+		"stall",
+		"timeout",
+		"settimeout",
+		"event",
+		"loop",
+		"next",
+		"tick",
+		"delay",
+		"async",
+		"await",
+		"promises",
+		"bluebird",
+		"threshold",
+		"range",
+		"random"
+	],
+	"dependencies": {
+		"random-int": "^3.1.0",
+		"unlimited-timeout": "^0.1.0"
+	},
+	"devDependencies": {
+		"in-range": "^3.0.0",
+		"time-span": "^5.1.0",
+		"tsd": "^0.33.0",
+		"xo": "^1.2.3"
+	}
+}

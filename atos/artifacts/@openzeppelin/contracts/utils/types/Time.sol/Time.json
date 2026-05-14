@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Time",
+  "sourceName": "@openzeppelin/contracts/utils/types/Time.sol",
+  "abi": [],
+  "bytecode": "0x6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220dc8719486a20280b2fb3124322b954d7a92fb84548c78276b7aa6626812fc56464736f6c63430008180033",
+  "deployedBytecode": "0x5f80fdfea2646970667358221220dc8719486a20280b2fb3124322b954d7a92fb84548c78276b7aa6626812fc56464736f6c63430008180033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

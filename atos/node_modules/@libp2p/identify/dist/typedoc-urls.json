@@ -1,0 +1,18 @@
+{
+  "Identify": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.Identify.html",
+  ".:Identify": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.Identify.html",
+  "IdentifyComponents": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyComponents.html",
+  ".:IdentifyComponents": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyComponents.html",
+  "IdentifyInit": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyInit.html",
+  ".:IdentifyInit": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyInit.html",
+  "IdentifyPush": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPush.html",
+  ".:IdentifyPush": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPush.html",
+  "IdentifyPushComponents": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPushComponents.html",
+  ".:IdentifyPushComponents": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPushComponents.html",
+  "IdentifyPushInit": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPushInit.html",
+  ".:IdentifyPushInit": "https://libp2p.github.io/js-libp2p/interfaces/_libp2p_identify.IdentifyPushInit.html",
+  "identify": "https://libp2p.github.io/js-libp2p/functions/_libp2p_identify.identify.html",
+  ".:identify": "https://libp2p.github.io/js-libp2p/functions/_libp2p_identify.identify.html",
+  "identifyPush": "https://libp2p.github.io/js-libp2p/functions/_libp2p_identify.identifyPush.html",
+  ".:identifyPush": "https://libp2p.github.io/js-libp2p/functions/_libp2p_identify.identifyPush.html"
+}
