@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATOS Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Courier New', monospace; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+    header { background: #161b22; border-bottom: 1px solid #30363d; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+    header h1 { font-size: 1.25rem; color: #58a6ff; }
+    header .badge { background: #1f6feb; color: #fff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; padding: 24px; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
+    .card h2 { font-size: 0.85rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .stat { font-size: 2rem; font-weight: bold; color: #58a6ff; }
+    .stat-label { font-size: 0.8rem; color: #8b949e; margin-top: 4px; }
+    .agent-list { list-style: none; }
+    .agent-list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #21262d; font-size: 0.875rem; }
+    .agent-list li:last-child { border-bottom: none; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot.online  { background: #3fb950; box-shadow: 0 0 6px #3fb950; }
+    .dot.offline { background: #f85149; }
+    .dot.pending { background: #d29922; }
+    .role-tag { background: #21262d; color: #58a6ff; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: auto; }
+    .task-feed { max-height: 240px; overflow-y: auto; }
+    .task-item { padding: 8px 0; border-bottom: 1px solid #21262d; font-size: 0.8rem; }
+    .task-item:last-child { border-bottom: none; }
+    .task-status { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 8px; }
+    .task-status.completed { background: #1a4731; color: #3fb950; }
+    .task-status.running   { background: #1c2d4a; color: #58a6ff; }
+    .task-status.failed    { background: #3d1a1a; color: #f85149; }
+    .task-status.pending   { background: #2d2208; color: #d29922; }
+    .task-status.retrying  { background: #2d2208; color: #d29922; }
+    .log-feed { max-height: 200px; overflow-y: auto; font-size: 0.75rem; color: #8b949e; }
+    .log-line { padding: 3px 0; border-bottom: 1px solid #21262d; }
+    .log-line .ts { color: #3fb950; margin-right: 8px; }
+    .log-line .level-warn  { color: #d29922; }
+    .log-line .level-error { color: #f85149; }
+    .log-line .level-info  { color: #58a6ff; }
+    .refresh-btn { background: #21262d; border: 1px solid #30363d; color: #e6edf3; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
+    .refresh-btn:hover { background: #30363d; }
+    .cid-display { font-size: 0.7rem; color: #8b949e; word-break: break-all; margin-top: 8px; background: #0d1117; padding: 6px; border-radius: 4px; }
+    .section-title { padding: 0 24px; margin-top: 8px; font-size: 0.75rem; color: #8b949e; text-transform: uppercase; letter-spacing: 0.1em; }
+    .alert-banner { margin: 0 24px 16px; background: #3d1a1a; border: 1px solid #f85149; border-radius: 6px; padding: 10px 14px; font-size: 0.85rem; display: none; }
+    .alert-banner.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ATOS Dashboard</h1>
+  <span class="badge">Autonomous Token Orchestration System</span>
+  <button class="refresh-btn" onclick="refreshAll()">Refresh</button>
+</header>
+
+<div id="alert-banner" class="alert-banner"></div>
+
+<div class="grid">
+
+  <!-- Token Stats -->
+  <div class="card">
+    <h2>Token — ATOS</h2>
+    <div class="stat" id="token-supply">100,000,000</div>
+    <div class="stat-label">Current circulating supply</div>
+    <div style="margin-top:16px; font-size:0.8rem; color:#8b949e;">
+      <div>Max supply: <span style="color:#e6edf3">1,000,000,000 ATOS</span></div>
+      <div style="margin-top:4px;">Networks: <span style="color:#e6edf3">Sepolia • Filecoin Calibration</span></div>
+      <div style="margin-top:4px;">DEX: <span style="color:#e6edf3">Uniswap v3 — ATOS/WETH</span></div>
+    </div>
+    <div class="cid-display" id="metadata-cid">Metadata CID: loading...</div>
+  </div>
+
+  <!-- Agent Status -->
+  <div class="card">
+    <h2>Agent Network</h2>
+    <ul class="agent-list" id="agent-list">
+      <li><span class="dot pending"></span>Deployer<span class="role-tag">:9001</span></li>
+      <li><span class="dot pending"></span>Liquidity Manager<span class="role-tag">:9002</span></li>
+      <li><span class="dot pending"></span>Monitor<span class="role-tag">:9003</span></li>
+      <li><span class="dot pending"></span>Governance<span class="role-tag">:9004</span></li>
+      <li><span class="dot pending"></span>Analytics<span class="role-tag">:9005</span></li>
+    </ul>
+    <div style="margin-top:12px; font-size:0.8rem; color:#8b949e;">
+      Peer discovery: <span style="color:#3fb950">mDNS + Kademlia DHT</span>
+    </div>
+  </div>
+
+  <!-- Task Stats -->
+  <div class="card">
+    <h2>Task Metrics</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div>
+        <div class="stat" id="tasks-completed" style="font-size:1.5rem; color:#3fb950">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div>
+        <div class="stat" id="tasks-failed" style="font-size:1.5rem; color:#f85149">0</div>
+        <div class="stat-label">Failed</div>
+      </div>
+      <div>
+        <div class="stat" id="tasks-running" style="font-size:1.5rem; color:#58a6ff">0</div>
+        <div class="stat-label">Running</div>
+      </div>
+      <div>
+        <div class="stat" id="tasks-pending" style="font-size:1.5rem; color:#d29922">0</div>
+        <div class="stat-label">Pending</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PQC Status -->
+  <div class="card">
+    <h2>PQC Crypto Layer</h2>
+    <div style="font-size:0.85rem; line-height:1.7;">
+      <div>Classical: <span style="color:#3fb950">X25519 ECDH</span></div>
+      <div>PQC: <span style="color:#d29922">Kyber-768 (stub)</span></div>
+      <div>KDF: <span style="color:#3fb950">HKDF-SHA256</span></div>
+      <div>Encryption: <span style="color:#3fb950">AES-256-GCM</span></div>
+      <div style="margin-top:8px; padding:6px; background:#0d1117; border-radius:4px; font-size:0.75rem; color:#8b949e;">
+        Replace Kyber stub with<br>@open-quantum-safe/liboqs-node<br>for production use
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">Task Feed</div>
+<div class="grid" style="grid-template-columns: 1fr;">
+  <div class="card">
+    <h2>Recent Task Events</h2>
+    <div class="task-feed" id="task-feed">
+      <div class="task-item" style="color:#8b949e; font-style:italic;">Waiting for agent network to connect...</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">IPLD Block Store</div>
+<div class="grid">
+  <div class="card">
+    <h2>Content-Addressed Records</h2>
+    <div style="font-size:0.85rem; line-height:1.7;">
+      <div>Encoding: <span style="color:#3fb950">dag-cbor</span></div>
+      <div>Hash: <span style="color:#3fb950">sha2-256</span></div>
+      <div>CID version: <span style="color:#3fb950">CIDv1</span></div>
+      <div>Base: <span style="color:#3fb950">base58btc</span></div>
+    </div>
+    <div style="margin-top:12px; font-size:0.8rem; color:#8b949e;">
+      Block store size: <span id="block-store-size" style="color:#58a6ff">0</span> records
+    </div>
+  </div>
+  <div class="card">
+    <h2>Log Chain (CID-linked)</h2>
+    <div class="log-feed" id="log-feed">
+      <div class="log-line" style="color:#8b949e; font-style:italic;">No logs yet — start agents with docker-compose up</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; padding:24px; color:#8b949e; font-size:0.75rem;">
+  ATOS — Autonomous Token Orchestration System &nbsp;|&nbsp;
+  Built for C4GT &nbsp;|&nbsp;
+  Libp2p · IPLD · Multiformats · Filecoin · Ethereum
+</div>
+
+<script>
+  const MOCK_TASKS = [
+    { type: "deploy_contract",    status: "completed", agent: "deployer",         time: "10:42:01" },
+    { type: "pin_to_ipfs",        status: "completed", agent: "deployer",         time: "10:42:15" },
+    { type: "provision_liquidity",status: "completed", agent: "liquidity_manager",time: "10:43:02" },
+    { type: "monitor_contract",   status: "running",   agent: "monitor",          time: "10:43:10" },
+    { type: "cast_vote",          status: "completed", agent: "governance",       time: "10:44:00" },
+    { type: "generate_report",    status: "completed", agent: "analytics",        time: "10:44:30" },
+    { type: "swap_tokens",        status: "pending",   agent: "-",                time: "10:45:00" },
+  ];
+
+  const MOCK_LOGS = [
+    { ts: "10:42:01", level: "info",  msg: "[deployer] ATOSToken deployed at 0xABC...123 on localhost" },
+    { ts: "10:42:15", level: "info",  msg: "[deployer] Pinned deployment to block store" },
+    { ts: "10:43:02", level: "info",  msg: "[liquidity_manager] Pool created and initialized" },
+    { ts: "10:43:10", level: "info",  msg: "[monitor] Monitoring 0xABC...123 on sepolia" },
+    { ts: "10:44:00", level: "info",  msg: "[governance] Self-delegated voting power" },
+    { ts: "10:44:30", level: "info",  msg: "[analytics] Analytics report generated" },
+    { ts: "10:45:00", level: "warn",  msg: "[monitor] WHALE TRANSFER: 1,500,000 ATOS from 0xDEF..." },
+  ];
+
+  function renderTasks(tasks) {
+    const feed = document.getElementById("task-feed");
+    feed.innerHTML = tasks.map(t =>
+      `<div class="task-item">
+        <span style="color:#8b949e">${t.time}</span>
+        <strong>${t.type}</strong>
+        <span class="task-status ${t.status}">${t.status.toUpperCase()}</span>
+        <span style="color:#8b949e; font-size:0.75rem; margin-left:8px">${t.agent}</span>
+      </div>`
+    ).join("");
+  }
+
+  function renderLogs(logs) {
+    const feed = document.getElementById("log-feed");
+    feed.innerHTML = logs.map(l =>
+      `<div class="log-line">
+        <span class="ts">${l.ts}</span>
+        <span class="level-${l.level}">[${l.level.toUpperCase()}]</span>
+        ${l.msg}
+      </div>`
+    ).join("");
+  }
+
+  function renderAgents() {
+    // In production, poll agent health endpoints here
+    const agents = [
+      { name: "Deployer",          port: 9001, status: "online" },
+      { name: "Liquidity Manager", port: 9002, status: "online" },
+      { name: "Monitor",           port: 9003, status: "online" },
+      { name: "Governance",        port: 9004, status: "online" },
+      { name: "Analytics",         port: 9005, status: "online" },
+    ];
+    const list = document.getElementById("agent-list");
+    list.innerHTML = agents.map(a =>
+      `<li>
+        <span class="dot ${a.status}"></span>
+        ${a.name}
+        <span class="role-tag">:${a.port}</span>
+      </li>`
+    ).join("");
+  }
+
+  function updateTaskCounts(tasks) {
+    document.getElementById("tasks-completed").textContent = tasks.filter(t => t.status === "completed").length;
+    document.getElementById("tasks-failed").textContent    = tasks.filter(t => t.status === "failed").length;
+    document.getElementById("tasks-running").textContent   = tasks.filter(t => t.status === "running").length;
+    document.getElementById("tasks-pending").textContent   = tasks.filter(t => t.status === "pending").length;
+  }
+
+  function refreshAll() {
+    renderTasks(MOCK_TASKS);
+    renderLogs(MOCK_LOGS);
+    renderAgents();
+    updateTaskCounts(MOCK_TASKS);
+    document.getElementById("metadata-cid").textContent =
+      "Metadata CID: bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi";
+    document.getElementById("block-store-size").textContent = "24";
+  }
+
+  // Initial render
+  refreshAll();
+</script>
+</body>
+</html>

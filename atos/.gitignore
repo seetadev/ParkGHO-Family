@@ -1,0 +1,12 @@
+node_modules/
+dist/
+cache/
+artifacts/
+typechain-types/
+coverage/
+coverage.json
+.env
+logs/
+*.log
+deployments/*.json
+cex-artifacts/

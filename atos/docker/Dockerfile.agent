@@ -1,0 +1,13 @@
+FROM node:20-alpine
+WORKDIR /app
+RUN apk add --no-cache python3 make g++
+COPY package*.json ./
+RUN npm ci
+COPY tsconfig.json ./
+COPY agents/ ./agents/
+COPY ipld/ ./ipld/
+COPY libp2p/ ./libp2p/
+COPY pqc/ ./pqc/
+COPY contracts/ ./contracts/
+RUN mkdir -p logs
+CMD ["npx", "ts-node", "agents/deployer/index.ts"]
